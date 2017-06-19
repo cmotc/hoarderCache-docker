@@ -101,12 +101,23 @@ Substitute user to the packagecacher user and download all the available source
 packages in the packages.list to the sources folder.
 
         RUN service apt-cacher-ng start && \
-                export DEBIAN_FRONTEND=noninteractive; \
-                for p in $(cat /home/packagecacher/packages.list | tr "\n" " "); do su packagecacher -c "apt-get source -yq $f"; done
+        export DEBIAN_FRONTEND=noninteractive; \
+        for p in $(cat /home/packagecacher/packages.list | tr "\n" " "); do \
+                su packagecacher -c "apt-get source -yq $p"; \
+                done
 
-TODO: disable any unnecessary services installed in the container before init,
-or init with a wrapper script instead.
+Now you've installed all these packages, and they may have enabled some
+services we don't want to run. So disable every one of them:
+
+        RUN for s in $(ls /etc/init.d/); do \
+                update-rc.d -f $s disable; \
+                done
+
+And re-enable only apt-cacher-ng and unattended-upgrades
+
+        RUN update-rc.d apt-cacher-ng enable
+        RUN update-rc.d unattended-upgrades enable
 
 and finally, initialize the container.
 
-        RUN /sbin/init -t 0 3
+        RUN /sbin/init
