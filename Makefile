@@ -7,4 +7,4 @@ enter:
 	docker run -i -t hoarder-cache bash
 
 run:
-	docker run -t hoarder-cache /sbin/init
+	nohup docker run -t hoarder-cache /sbin/init 2>1 &
