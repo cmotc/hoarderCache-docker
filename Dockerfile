@@ -1,6 +1,6 @@
 FROM debian:sid
 RUN apt-get update
-RUN apt-get install -yq apt-transport-https gpgv-static gnupg2 bash apt-utils curl sysvinit-core
+RUN apt-get install -yq apt-transport-https gpgv-static gnupg2 bash apt-utils curl sysvinit-core devscripts
 RUN echo deb https://pkg.tox.chat/debian stable sid | tee /etc/apt/sources.list.d/tox.list
 RUN wget -qO - https://pkg.tox.chat/debian/pkg.gpg.key | apt-key add -
 RUN echo "deb http://apt.syncthing.net/ syncthing release" | tee /etc/apt/sources.list.d/syncthing.list
@@ -25,6 +25,7 @@ RUN apt-get update
 RUN yes N | apt-get install -yq apt-cacher-ng apt-config-auto-update unattended-upgrades apt-now static-page-scripts
 RUN useradd -ms /bin/bash packagecacher
 ADD . /home/packagecacher/sources
+RUN chown -R packagecacher:packagecacher /home/packagecacher/sources
 WORKDIR /home/packagecacher/sources
 COPY packages.list /home/packagecacher/
 RUN echo > /etc/apt/apt.conf.d/02periodic; \
@@ -43,6 +44,12 @@ RUN service apt-cacher-ng start && \
         apt-get install -yq $(cat /home/packagecacher/packages.list | tr "\n" " ")
 RUN service apt-cacher-ng start && \
         export DEBIAN_FRONTEND=noninteractive; \
-        for p in $(cat /home/packagecacher/packages.list | tr "\n" " "); do su packagecacher -c "apt-get source -yq $f"; done
-RUN /sbin/init -t 0 3
+        for p in $(cat /home/packagecacher/packages.list | tr "\n" " "); do \
+                su packagecacher -c "apt-get source -yq $p"; \
+                done
+RUN for s in $(ls /etc/init.d/); do \
+        update-rc.d -f $s disable; \
+        done
+RUN update-rc.d apt-cacher-ng enable
+RUN update-rc.d unattended-upgrades enable
 
