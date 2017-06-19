@@ -1,5 +1,9 @@
 dummy:
 
+update:
+	git pull
+	make build
+
 build:
 	docker build -t hoarder-cache .
 
