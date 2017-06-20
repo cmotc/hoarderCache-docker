@@ -12,3 +12,6 @@ enter:
 
 run:
 	nohup docker run -t hoarder-cache /sbin/init 2>1 &
+
+sysv-init:
+	/sbin/init
