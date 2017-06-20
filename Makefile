@@ -14,4 +14,4 @@ run:
 	nohup docker run -p 3124:3124 -t hoarder-cache make sysv-init 2>1 &
 
 sysv-init:
-	sudo service apt-cacher-ng start && sudo service unattended-upgrades start
+	service apt-cacher-ng start && service unattended-upgrades start
