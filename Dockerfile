@@ -44,7 +44,10 @@ RUN service apt-cacher-ng start && \
         apt-get update
 RUN service apt-cacher-ng start && \
         export DEBIAN_FRONTEND=noninteractive; \
-        apt-get install -yq $(cat /home/packagecacher/packages.list | tr "\n" " ")
+        apt-get install -yq --install-suggests $(cat /home/packagecacher/packages.list | tr "\n" " ")
+RUN service apt-cacher-ng start && \
+        export DEBIAN_FRONTEND=noninteractive; \
+        apt-get build-depends -yq --install-suggests $(cat /home/packagecacher/packages.list | tr "\n" " ")
 RUN service apt-cacher-ng start && \
         export DEBIAN_FRONTEND=noninteractive; \
         for p in $(cat /home/packagecacher/packages.list | tr "\n" " "); do \
