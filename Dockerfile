@@ -45,9 +45,9 @@ RUN service apt-cacher-ng start && \
 RUN service apt-cacher-ng start && \
         export DEBIAN_FRONTEND=noninteractive; \
         apt-get install -yq $(cat /home/packagecacher/packages.list | tr "\n" " ")
-RUN service apt-cacher-ng start && \
-        export DEBIAN_FRONTEND=noninteractive; \
-        apt-get build-dep -yq $(cat /home/packagecacher/packages.list | tr "\n" " ")
+#RUN service apt-cacher-ng start && \
+#        export DEBIAN_FRONTEND=noninteractive; \
+#        apt-get build-dep -yq $(cat /home/packagecacher/packages.list | tr "\n" " ")
 RUN service apt-cacher-ng start && \
         export DEBIAN_FRONTEND=noninteractive; \
         for p in $(cat /home/packagecacher/packages.list | tr "\n" " "); do \
