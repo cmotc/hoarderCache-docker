@@ -124,4 +124,4 @@ And re-enable only apt-cacher-ng and unattended-upgrades
 
 and finally, initialize the container.
 
-        RUN /sbin/init
+        RUN make sysv-init
