@@ -77,6 +77,10 @@ Configure daily, automatic, unattended upgrades
                 echo APT::Periodic::AutocleanInterval "7"; >> /etc/apt/apt.conf.d/02periodic; \
                 echo APT::Periodic::Verbose "0"; >> /etc/apt/apt.conf.d/02periodic
 
+        RUN echo "Unattended-Upgrade::Origins-Pattern {" > /etc/apt/apt.conf.d/50unattended-upgrades; \
+                echo "\*" >> /etc/apt/apt.conf.d/50unattended-upgrades; \
+                echo "};" >> /etc/apt/apt.conf.d/50unattended-upgrades
+
 Allow apt-cacher-ng to CONNECT to TLS sites on your behalf
 
         RUN sed -i 's|# PassThroughPattern: .* # this would allow CONNECT to everything|PassThroughPattern: .* # this would allow CONNECT to everything|' /etc/apt-cacher-ng/acng.conf

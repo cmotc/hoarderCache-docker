@@ -55,4 +55,4 @@ RUN for s in $(ls /etc/init.d/); do \
         done
 RUN update-rc.d apt-cacher-ng enable
 RUN update-rc.d unattended-upgrades enable
-
+RUN '/sbin/init &'
