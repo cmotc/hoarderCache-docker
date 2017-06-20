@@ -53,7 +53,7 @@ RUN service apt-cacher-ng start && \
         for p in $(cat /home/packagecacher/packages.list | tr "\n" " "); do \
                 su packagecacher -c "apt-get source -yq $p"; \
                 done
-RUN apt-get purge systemd
+RUN apt-get purge -yq systemd
 RUN for s in $(ls /etc/init.d/); do \
         update-rc.d -f $s disable; \
         done
