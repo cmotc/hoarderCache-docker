@@ -8,6 +8,9 @@ push:
 
 update:
 	git pull
+
+update-build:
+	make update
 	make build
 
 update-all:
@@ -20,6 +23,7 @@ build:
 all:
 	make stage-one-build
 	make stage-two-build
+	make stage-three-build
 
 stage-one-build:
 	cd fyric-apt-cache; \
@@ -28,6 +32,10 @@ stage-one-build:
 stage-two-build:
 	cd hoarder-apt-cache; \
 	docker build -t hoarder-apt-cache .
+
+stage-three-build:
+	cd hoarder-apt-cache-source; \
+	docker build -t hoarder-apt-cache-source .
 
 enter:
 	docker run -i -t hoarder-cache bash
