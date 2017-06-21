@@ -1,6 +1,6 @@
 FROM debian:sid
 RUN apt-get update
-RUN apt-get install -yq apt-transport-https gpgv-static gnupg2 bash apt-utils curl sysvinit-core devscripts
+RUN apt-get install -yq apt-transport-https gpgv-static gnupg2 bash apt-utils curl systemd devscripts
 RUN echo deb https://pkg.tox.chat/debian stable sid | tee /etc/apt/sources.list.d/tox.list
 RUN wget -qO - https://pkg.tox.chat/debian/pkg.gpg.key | apt-key add -
 RUN echo "deb http://apt.syncthing.net/ syncthing release" | tee /etc/apt/sources.list.d/syncthing.list
@@ -45,18 +45,15 @@ RUN service apt-cacher-ng start && \
 RUN service apt-cacher-ng start && \
         export DEBIAN_FRONTEND=noninteractive; \
         apt-get install -yq $(cat /home/packagecacher/packages.list | tr "\n" " ")
-#RUN service apt-cacher-ng start && \
-#        export DEBIAN_FRONTEND=noninteractive; \
-#        apt-get build-dep -yq $(cat /home/packagecacher/packages.list | tr "\n" " ")
 RUN service apt-cacher-ng start && \
         export DEBIAN_FRONTEND=noninteractive; \
         for p in $(cat /home/packagecacher/packages.list | tr "\n" " "); do \
                 su packagecacher -c "apt-get source -yq $p"; \
                 done
 RUN for s in $(ls /etc/init.d/); do \
-        update-rc.d -f $s disable; \
+        systemctl disable $s; \
         done
-RUN update-rc.d apt-cacher-ng enable
-RUN update-rc.d unattended-upgrades enable
-RUN service apt-cacher-ng start && \
-	service unattended-upgrades start
+RUN systemctl enable apt-cacher-ng
+RUN systemctl enable unattended-upgrades
+RUN systemctl start apt-cacher-ng start && \
+	systemctl start unattended-upgrades

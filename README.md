@@ -18,7 +18,7 @@ supporting software:
 
         FROM debian:sid
         RUN apt-get update
-        RUN apt-get install -yq apt-transport-https gpgv-static gnupg2 bash apt-utils curl sysvinit-core
+        RUN apt-get install -yq apt-transport-https gpgv-static gnupg2 bash apt-utils curl systemd
 
 Then, you add some awesome repositories to supplement your well-established
 Debian packages. Some have source repositories and some don't, that's OK for
@@ -114,14 +114,15 @@ Now you've installed all these packages, and they may have enabled some
 services we don't want to run. So disable every one of them:
 
         RUN for s in $(ls /etc/init.d/); do \
-                update-rc.d -f $s disable; \
+                systemctl disable $s; \
                 done
 
-And re-enable only apt-cacher-ng and unattended-upgrades
+And re-enable only apt-cacher-ng and unattended-upgrades, hopefully their dependencies
 
-        RUN update-rc.d apt-cacher-ng enable
-        RUN update-rc.d unattended-upgrades enable
+        RUN systemctl enable apt-cacher-ng
+        RUN systemctl enable unattended-upgrades
 
 and finally, initialize the container.
 
-        RUN make sysv-init
+        RUN systemctl apt-cacher-ng start
+        RUN systemctl unattended-upgrades start
