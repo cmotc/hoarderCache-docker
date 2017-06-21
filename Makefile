@@ -49,7 +49,8 @@ enter:
 launcher:
 	echo "#! /usr/bin/env bash" | tee /usr/sbin/launcher.sh
 	echo "/usr/sbin/apt-cacher-ng -i -c /etc/apt-cacher-ng &" | tee -a /usr/sbin/launcher.sh
-	echo "/usr/sbin/cron" | tee -a /usr/sbin/launcher.sh
+	echo "/usr/sbin/cron &" | tee -a /usr/sbin/launcher.sh
+	echo "" | tee -a /usr/sbin/launcher.sh
 	chmod a+x /usr/sbin/launcher.sh
 
 run:
