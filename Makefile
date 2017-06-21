@@ -1,5 +1,11 @@
 dummy:
 
+push:
+	gpg --batch --yes --clear-sign -u "$(SIGNING_KEY)" \
+		README.md
+	git commit -am "$(DEV_MESSAGE)"
+	git push github
+
 update:
 	git pull
 	make build
@@ -10,10 +16,12 @@ build:
 enter:
 	docker run -i -t hoarder-cache bash
 
-run:
-	nohup docker run -p 3124:3124 -t hoarder-cache service apt-cacher-ng start 2>cacher.err 1>cacher.log &
-	#nohup docker run -p -t hoarder-cache service apt-cacher-ng start 2>cacher.err 1>cacher.log &
+launcher:
+	echo "#! /usr/bin/env bash" | tee /usr/sbin/launcher.sh
+	echo "/usr/sbin/apt-cacher-ng -i -c /etc/apt-cacher-ng &" | tee -a /usr/sbin/launcher.sh
+	echo "/usr/sbin/cron" | tee -a /usr/sbin/launcher.sh
+	chmod a+x /usr/sbin/launcher.sh
 
-sysv-init:
-	service apt-cacher-ng start
-	service unattended-upgrades start
+run:
+	nohup docker run -p 3124:3124 -t hoarder-cache launcher.sh 2>cacher.err 1>cacher.log &
+

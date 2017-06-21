@@ -26,7 +26,7 @@ RUN yes N | apt-get install -yq apt-cacher-ng apt-config-auto-update unattended-
 RUN useradd -ms /bin/bash packagecacher
 ADD . /home/packagecacher/sources
 RUN chown -R packagecacher:packagecacher /home/packagecacher/sources
-WORKDIR /home/packagecacher/sources
+WORKDIR /home/packagecacher
 COPY packages.list /home/packagecacher/
 RUN echo > /etc/apt/apt.conf.d/02periodic; \
         echo APT::Periodic::Enable "1"; > /etc/apt/apt.conf.d/02periodic; \
@@ -45,6 +45,7 @@ RUN service apt-cacher-ng start && \
 RUN service apt-cacher-ng start && \
         export DEBIAN_FRONTEND=noninteractive; \
         apt-get install -yq $(cat /home/packagecacher/packages.list | tr "\n" " ")
+WORKDIR /home/packagecacher/sources
 RUN service apt-cacher-ng start && \
         export DEBIAN_FRONTEND=noninteractive; \
         for p in $(cat /home/packagecacher/packages.list | tr "\n" " "); do \
@@ -55,4 +56,4 @@ RUN for s in $(ls /etc/init.d/); do \
         done
 RUN systemctl enable apt-cacher-ng
 RUN systemctl enable unattended-upgrades
-
+RUN make launcher
