@@ -10,6 +10,10 @@ update:
 	git pull
 	make build
 
+update-all:
+	git pull
+	make all
+
 build:
 	docker build -t hoarder-cache .
 
