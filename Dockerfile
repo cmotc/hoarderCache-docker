@@ -1,6 +1,6 @@
 FROM debian:sid
 RUN apt-get update
-RUN apt-get install -yq apt-transport-https gpgv-static gnupg2 bash apt-utils curl systemd devscripts
+RUN apt-get install -yq apt-transport-https gpgv-static gnupg2 bash apt-utils curl devscripts
 RUN echo deb https://pkg.tox.chat/debian stable sid | tee /etc/apt/sources.list.d/tox.list
 RUN wget -qO - https://pkg.tox.chat/debian/pkg.gpg.key | apt-key add -
 RUN echo "deb http://apt.syncthing.net/ syncthing release" | tee /etc/apt/sources.list.d/syncthing.list
