@@ -13,6 +13,18 @@ update:
 build:
 	docker build -t hoarder-cache .
 
+all:
+	make stage-one-build
+	make stage-two-build
+
+stage-one-build:
+	cd fyric-apt-cache; \
+	docker build -t fyrix-apt-cache .
+
+stage-two-build:
+	cd hoarder-apt-cache; \
+	docker build -t hoarder-apt-cache .
+
 enter:
 	docker run -i -t hoarder-cache bash
 
