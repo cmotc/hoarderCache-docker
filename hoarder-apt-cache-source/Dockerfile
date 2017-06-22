@@ -1,4 +1,5 @@
 FROM hoarder-apt-cache
+RUN make launcher
 WORKDIR /home/packagecacher/sources
 RUN service apt-cacher-ng start && \
         export DEBIAN_FRONTEND=noninteractive; \
