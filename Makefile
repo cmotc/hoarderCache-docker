@@ -54,4 +54,4 @@ launcher:
 	chmod a+x /usr/sbin/launcher.sh
 
 run:
-	docker run -p 3124:3124 -t hoarder-cache /usr/sbin/launcher.sh 2>cacher.err 1>cacher.log &
+	docker run -p 3124:3124 -t hoarder-apt-cache-source /usr/sbin/launcher.sh 2>cacher.err 1>cacher.log &

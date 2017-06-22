@@ -10,6 +10,12 @@ feeding it a package list. Packages on the list will be kept up to date
 automatically, and other packages will be cached as they are retrieved by any
 client of the proxy.
 
+This is probably an abuse of Docker. Certainly not best practice. But it did successfully bootstrap my liveCD offline last night.
+---------------------------------------------------------------------------------------------------------------------------------
+
+I will separate the two services that have to run into two different containers soon.
+-------------------------------------------------------------------------------------
+
 How it works
 ------------
 
