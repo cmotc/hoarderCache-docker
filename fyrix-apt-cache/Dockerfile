@@ -4,7 +4,7 @@ RUN useradd -ms /bin/bash packagecacher
 ADD . /home/packagecacher/sources
 RUN chown -R packagecacher:packagecacher /home/packagecacher/sources
 WORKDIR /home/packagecacher
-COPY packages.list /home/packagecacher/
+COPY ../packages.list /home/packagecacher/
 RUN echo > /etc/apt/apt.conf.d/02periodic; \
         echo APT::Periodic::Enable "1"; > /etc/apt/apt.conf.d/02periodic; \
         echo APT::Periodic::Update-Package-Lists "1"; >> /etc/apt/apt.conf.d/02periodic; \
