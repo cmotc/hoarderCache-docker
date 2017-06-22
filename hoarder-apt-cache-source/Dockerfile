@@ -1,4 +1,5 @@
 FROM hoarder-apt-cache
+COPY Makefile .
 RUN make launcher
 WORKDIR /home/packagecacher/sources
 RUN service apt-cacher-ng start && \
