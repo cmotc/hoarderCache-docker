@@ -32,7 +32,7 @@ stage-zero-build:
 		docker build -t base-apt-cache .
 
 stage-one-build:
-	cd fyric-apt-cache; \
+	cd fyrix-apt-cache; \
 		docker build -t fyrix-apt-cache .
 
 stage-two-build:
