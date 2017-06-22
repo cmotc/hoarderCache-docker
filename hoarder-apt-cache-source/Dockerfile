@@ -10,4 +10,4 @@ RUN for s in $(ls /etc/init.d/); do \
         done
 RUN systemctl enable apt-cacher-ng
 RUN systemctl enable unattended-upgrades
-RUN make launcher
+RUN /usr/sbin/launcher.sh

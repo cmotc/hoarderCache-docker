@@ -124,5 +124,4 @@ And re-enable only apt-cacher-ng and unattended-upgrades, hopefully their depend
 
 and finally, initialize the container.
 
-        RUN systemctl apt-cacher-ng start
-        RUN systemctl unattended-upgrades start
+        docker run -p 3124:3124 -t hoarder-cache /usr/sbin/launcher.sh 2>cacher.err 1>cacher.log &
