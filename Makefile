@@ -26,6 +26,7 @@ all:
 	make stage-one-build
 	make stage-two-build
 	make stage-three-build
+	make stage-four-build
 
 stage-zero-build:
 	cd base-apt-cache; \
@@ -43,8 +44,12 @@ stage-three-build:
 	cd hoarder-apt-cache-source; \
 		docker build -t hoarder-apt-cache-source .
 
+stage-four-build:
+	cd hoarder-apt-cache-source; \
+		docker build -t hoarder-apt-cache-source-startup .
+
 enter:
-	docker run -i -t hoarder-apt-cache-source bash
+	docker run -i -t hoarder-apt-cache-source-startup bash
 
 launcher:
 	echo "#! /usr/bin/env bash" | tee /usr/sbin/launcher.sh
