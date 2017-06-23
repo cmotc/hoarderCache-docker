@@ -47,11 +47,11 @@ enter:
 	docker run -i -t hoarder-cache bash
 
 launcher:
-	echo "#! /usr/bin/env bash" | tee /usr/sbin/launcher.sh
-	echo "/usr/sbin/apt-cacher-ng -i -c /etc/apt-cacher-ng" | tee -a /usr/sbin/launcher.sh
-	echo "/usr/sbin/cron" | tee -a /usr/sbin/launcher.sh
-	echo "" | tee -a /usr/sbin/launcher.sh
-	chmod a+x /usr/sbin/launcher.sh
+	echo "#! /usr/bin/env bash" | tee /bin/launcher.sh
+	echo "/usr/sbin/apt-cacher-ng -i -c /etc/apt-cacher-ng " | tee -a /bin/launcher.sh
+	echo "/usr/sbin/cron " | tee -a /bin/launcher.sh
+	echo "" | tee -a /bin/launcher.sh
+	chmod a+x /bin/launcher.sh
 
 run:
-	docker run -p 3142:3142 -t hoarder-cache /usr/sbin/launcher.sh
+	docker run -p 3142:3142 -t hoarder-apt-cache-source /bin/launcher.sh
