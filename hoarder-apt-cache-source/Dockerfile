@@ -1,6 +1,4 @@
 FROM hoarder-apt-cache
-COPY Makefile .
-RUN make launcher
 WORKDIR /home/packagecacher/sources
 RUN service apt-cacher-ng start && \
         export DEBIAN_FRONTEND=noninteractive; \
@@ -10,6 +8,6 @@ RUN service apt-cacher-ng start && \
 RUN for s in $(ls /etc/init.d/); do \
         systemctl disable $s; \
         done
-RUN systemctl enable apt-cacher-ng
-RUN systemctl enable unattended-upgrades
+COPY Makefile .
+RUN make launcher
 RUN /usr/sbin/launcher.sh

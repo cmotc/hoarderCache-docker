@@ -123,11 +123,6 @@ services we don't want to run. So disable every one of them:
                 systemctl disable $s; \
                 done
 
-And re-enable only apt-cacher-ng and unattended-upgrades, hopefully their dependencies
-
-        RUN systemctl enable apt-cacher-ng
-        RUN systemctl enable unattended-upgrades
-
 and finally, initialize the container.
 
         docker run -p 3142:3142 -t hoarder-cache /usr/sbin/launcher.sh 2>cacher.err 1>cacher.log &
