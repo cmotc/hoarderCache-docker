@@ -52,7 +52,7 @@ enter:
 	docker run -i -t hoarder-apt-cache-source-startup bash
 
 run:
-	docker run -rm -i \
+	docker run --rm -i \
 		-v /sys/fs/cgroup:/sys/fs/cgroup:ro \
 		--name fyrix-hoarder-cache -p 3142:3142 \
 		-t hoarder-apt-cache-source-startup /sbin/init
