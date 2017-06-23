@@ -52,4 +52,4 @@ enter:
 	docker run -i -t hoarder-apt-cache-source-startup bash
 
 run:
-	docker run -i -p 3142:3142 -t hoarder-apt-cache-source-startup launcher.sh
+	docker run -i -p 3142:3142 -t hoarder-apt-cache-source-startup /sbin/init

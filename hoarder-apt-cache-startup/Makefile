@@ -2,8 +2,7 @@ dummy:
 
 launcher:
 	echo "#! /usr/bin/env bash" | tee /bin/launcher.sh
-	echo "#/usr/sbin/apt-cacher-ng -i -c /etc/apt-cacher-ng " | tee -a /bin/launcher.sh
-	echo "#/usr/sbin/cron -f " | tee -a /bin/launcher.sh
+	echo "/sbin/init " | tee -a /bin/launcher.sh
 	chmod a+x /bin/launcher.sh
 
 run:
