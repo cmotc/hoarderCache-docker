@@ -44,7 +44,7 @@ stage-three-build:
 		docker build -t hoarder-apt-cache-source .
 
 enter:
-	docker run -i -t hoarder-cache bash
+	docker run -i -t hoarder-apt-cache-source bash
 
 launcher:
 	echo "#! /usr/bin/env bash" | tee /usr/sbin/launcher.sh
