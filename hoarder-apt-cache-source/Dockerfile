@@ -8,6 +8,7 @@ RUN service apt-cacher-ng start && \
 RUN for s in $(ls /etc/init.d/); do \
         systemctl disable $s; \
         done
+
 COPY Makefile .
 RUN make launcher
 RUN /usr/sbin/launcher.sh
