@@ -59,4 +59,4 @@ launcher:
 	chmod a+x launcher.sh
 
 run:
-	docker run -p 3142:3142 -t hoarder-apt-cache-source ./launcher.sh
+	docker run -p 3142:3142 -t hoarder-apt-cache-source /home/packagecacher/launcher.sh
