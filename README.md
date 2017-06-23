@@ -125,4 +125,4 @@ services we don't want to run. So disable every one of them:
 
 and finally, initialize the container.
 
-        docker run -p 3142:3142 -t hoarder-cache /usr/sbin/launcher.sh 2>cacher.err 1>cacher.log &
+        docker run -p 3142:3142 -t hoarder-cache /usr/sbin/launcher.sh

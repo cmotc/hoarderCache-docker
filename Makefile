@@ -45,7 +45,7 @@ stage-three-build:
 		docker build -t hoarder-apt-cache-source .
 
 stage-four-build:
-	cd hoarder-apt-cache-source; \
+	cd hoarder-apt-cache-startup; \
 		docker build -t hoarder-apt-cache-source-startup .
 
 enter:
