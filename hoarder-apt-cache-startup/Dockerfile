@@ -8,4 +8,3 @@ RUN systemctl enable cron
 RUN systemctl enable unattended-upgrades
 COPY Makefile .
 RUN make launcher
-RUN /bin/launcher.sh
