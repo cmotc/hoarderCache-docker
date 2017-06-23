@@ -7,7 +7,7 @@ launcher:
 	echo "    service apt-cacher-ng start" | tee -a /bin/launcher.sh
 	echo "    service cron start" | tee -a /bin/launcher.sh
 	echo "    service unattended-upgrades start" | tee -a /bin/launcher.sh
-	echo "    sleep 20" | tee -a /bin/launcher.sh
+	echo "    sleep 1200" | tee -a /bin/launcher.sh
 	echo "done" | tee -a /bin/launcher.sh
 	echo "" | tee -a /bin/launcher.sh
 	chmod a+x /bin/launcher.sh
