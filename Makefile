@@ -54,6 +54,7 @@ enter:
 run:
 	docker run -i \
 		-v /sys/fs/cgroup:/sys/fs/cgroup:ro \
+		-d \
 		-h aptcacher \
 		--network=peer-vpn-network \
 		--ip=192.168.3.101 \
@@ -63,6 +64,7 @@ run:
 
 run-bridge:
 	docker run -i \
+		-d \
 		-v /sys/fs/cgroup:/sys/fs/cgroup:ro \
 		-h aptcacher \
 		--network=bridge \
