@@ -8,6 +8,7 @@ RUN systemctl enable cron
 RUN systemctl enable unattended-upgrades
 COPY Makefile .
 RUN make launcher
+EXPOSE 3142/tcp
 RUN service apt-cacher-ng start && \
         sleep 3 && \
         apt-get update && \
