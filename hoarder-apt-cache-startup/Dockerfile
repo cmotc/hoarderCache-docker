@@ -8,4 +8,7 @@ RUN systemctl enable cron
 RUN systemctl enable unattended-upgrades
 COPY Makefile .
 RUN make launcher
-RUN service apt-cacher-ng start && apt-get update && apt-get updgrade -y
+RUN service apt-cacher-ng start && \
+        sleep 3 && \
+        apt-get update && \
+        apt-get upgrade -y
