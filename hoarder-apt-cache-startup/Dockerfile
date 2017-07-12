@@ -8,3 +8,4 @@ RUN systemctl enable cron
 RUN systemctl enable unattended-upgrades
 COPY Makefile .
 RUN make launcher
+RUN apt-get update && apt-get updgrade -y
