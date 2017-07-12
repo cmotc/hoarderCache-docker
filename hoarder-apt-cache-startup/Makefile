@@ -11,6 +11,3 @@ launcher:
 	echo "done" | tee -a /bin/launcher.sh
 	echo "" | tee -a /bin/launcher.sh
 	chmod a+x /bin/launcher.sh
-
-run:
-	docker run -i -p 3142:3142 -t hoarder-apt-cache-source-startup launcher.sh &

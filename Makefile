@@ -54,5 +54,9 @@ enter:
 run:
 	docker run -i \
 		-v /sys/fs/cgroup:/sys/fs/cgroup:ro \
-		--name fyrix-hoarder-cache -p 3142:3142 \
+		-h aptcacher \
+		--network=peer-vpn-network \
+		--ip=192.168.3.101 \
+		-p 3142:3142 \
+		--name fyrix-hoarder-cache \
 		-t hoarder-apt-cache-source-startup launcher.sh
