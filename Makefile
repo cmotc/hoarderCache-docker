@@ -58,7 +58,7 @@ run:
 		-h aptcacher \
 		--network=peer-vpn-network \
 		--ip=192.168.3.101 \
-		-p 192.168.3.101:3142:3142 \
+		-p 3143:3142 \
 		--name fyrix-hoarder-cache \
 		-t hoarder-apt-cache-source-startup launcher.sh
 
