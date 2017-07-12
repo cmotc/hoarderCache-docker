@@ -1,4 +1,5 @@
 FROM debian:sid
+RUN chown -R _apt:root /var/lib/apt/lists/
 RUN apt-get update
 RUN apt-get install -yq apt-transport-https gpgv-static gnupg2 bash apt-utils curl devscripts
 RUN echo deb https://pkg.tox.chat/debian stable sid | tee /etc/apt/sources.list.d/tox.list
