@@ -68,5 +68,5 @@ run-bridge:
 		--network=bridge \
 		--ip=172.2.0.10 \
 		-p 3142:3142 \
-		--name fyrix-hoarder-cache \
+		--name fyrix-hoarder-cache-bridge \
 		-t hoarder-apt-cache-source-startup launcher.sh
