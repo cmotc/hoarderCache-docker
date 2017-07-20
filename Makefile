@@ -54,20 +54,21 @@ enter:
 run:
 	docker run -i \
 		-v /sys/fs/cgroup:/sys/fs/cgroup:ro \
-		-d \
 		-h aptcacher \
 		--network=peer-vpn-network \
-		--ip=192.168.3.101 \
-		-p 3143:3142 \
+		--ip=192.168.99.101 \
+		--publish 192.168.99.101:3142:3142 \
+		--volume cache:/var/cache/apt-cacher-ng \
+		--volume /sys/fs/cgroup:/sys/fs/cgroup:ro \
 		--name fyrix-hoarder-cache \
 		-t hoarder-apt-cache-source-startup launcher.sh
 
 run-bridge:
 	docker run -i \
-		-d \
-		-v /sys/fs/cgroup:/sys/fs/cgroup:ro \
 		-h aptcacher \
-		--network=bridge \
-		-p 3142:3142 \
+		--publish 3142:3142 \
+		--restart=always \
+		--volume cache:/var/cache/apt-cacher-ng \
+		--volume /sys/fs/cgroup:/sys/fs/cgroup:ro \
 		--name fyrix-hoarder-cache-bridge \
 		-t hoarder-apt-cache-source-startup launcher.sh
