@@ -1,7 +1,3 @@
 FROM fyrix-apt-cache
-RUN service apt-cacher-ng start && \
-        export DEBIAN_FRONTEND=noninteractive; \
+RUN apt-cacher-ng -c /etc/apt-cacher-ng/ & sleep 3 && \
         apt-get update
-RUN service apt-cacher-ng start && \
-        export DEBIAN_FRONTEND=noninteractive; \
-        apt-get install -yq $(cat /home/packagecacher/packages.list | tr "\n" " ")

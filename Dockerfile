@@ -41,19 +41,6 @@ RUN sed -i 's|# PassThroughPattern: .* # this would allow CONNECT to everything|
 RUN echo "Acquire::http { Proxy \"http://127.0.0.1:3142\"; };" | tee /etc/apt/apt.conf.d/02proxy
 RUN service apt-cacher-ng start && \
         export DEBIAN_FRONTEND=noninteractive; \
-        apt-get update
-RUN service apt-cacher-ng start && \
-        export DEBIAN_FRONTEND=noninteractive; \
-        apt-get install -yq $(cat /home/packagecacher/packages.list | tr "\n" " ")
-WORKDIR /home/packagecacher/sources
-#RUN service apt-cacher-ng start && \
-        #export DEBIAN_FRONTEND=noninteractive; \
-        #for p in $(cat /home/packagecacher/packages.list | tr "\n" " "); do \
-                #su packagecacher -c "apt-get source -yq $p"; \
-                #done
-RUN for s in $(ls /etc/init.d/); do \
-        systemctl disable $s; \
-        done
-RUN systemctl enable apt-cacher-ng
-RUN systemctl enable unattended-upgrades
+        apt-get update; \
+        apt-get dist-upgrade
 RUN make launcher
