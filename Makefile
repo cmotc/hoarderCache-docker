@@ -66,7 +66,7 @@ run:
 run-bridge:
 	docker run -i \
 		-h aptcacher \
-		--publish 3142:3142 \
+		--publish 0.0.0.0:3142:3142 \
 		--restart=always \
 		--volume cache:/var/cache/apt-cacher-ng \
 		--volume /sys/fs/cgroup:/sys/fs/cgroup:ro \
