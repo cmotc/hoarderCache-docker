@@ -1,5 +1,5 @@
 FROM base-apt-cache
-RUN yes N | apt-get install -yq apt-cacher-ng apt-config-auto-update unattended-upgrades apt-now static-page-scripts
+RUN yes N | apt-get install -yq apt-cacher-ng
 RUN useradd -ms /bin/bash packagecacher
 ADD . /home/packagecacher/sources
 RUN chown -R packagecacher:packagecacher /home/packagecacher/sources
