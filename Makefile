@@ -23,52 +23,44 @@ build:
 
 all:
 	make stage-zero-build
-	make stage-one-build
-	make stage-two-build
-	make stage-three-build
-	make stage-four-build
 
 stage-zero-build:
-	cd base-apt-cache; \
-		docker build -t base-apt-cache .
-
-stage-one-build:
-	cd fyrix-apt-cache; \
-		docker build -t fyrix-apt-cache .
-
-stage-two-build:
-	cd hoarder-apt-cache; \
-		docker build -t hoarder-apt-cache .
-
-stage-three-build:
-	cd hoarder-apt-cache-source; \
-		docker build -t hoarder-apt-cache-source .
-
-stage-four-build:
-	cd hoarder-apt-cache-startup; \
-		docker build -t hoarder-apt-cache-source-startup .
+	docker build --force-rm -t base-apt-cache .
 
 enter:
-	docker run -i -t hoarder-apt-cache-source-startup bash
+	docker run -i -t base-apt-cache bash
 
 run:
-	docker run -i \
-		-v /sys/fs/cgroup:/sys/fs/cgroup:ro \
-		-h aptcacher \
-		--network=peer-vpn-network \
-		--ip=192.168.99.101 \
-		--publish 192.168.99.101:3142:3142 \
+	docker run -h aptcacher \
+		-p 3142:3142 \
 		--volume cache:/var/cache/apt-cacher-ng \
 		--volume /sys/fs/cgroup:/sys/fs/cgroup:ro \
 		--name fyrix-hoarder-cache \
-		-t hoarder-apt-cache-source-startup launcher.sh
+		-t base-apt-cache
+
+run-daemon:
+	docker run -d --rm \
+		-h aptcacher \
+		-p 3142:3142 \
+		--volume cache:/var/cache/apt-cacher-ng \
+		--volume /sys/fs/cgroup:/sys/fs/cgroup:ro \
+		--name fyrix-hoarder-cache-daemon \
+		-t base-apt-cache
 
 run-bridge:
-	docker run -i \
+	docker run -d \
 		-h aptcacher \
-		--publish 0.0.0.0:3142:3142 \
+		-p 3142:3142 \
 		--restart=always \
 		--volume cache:/var/cache/apt-cacher-ng \
 		--volume /sys/fs/cgroup:/sys/fs/cgroup:ro \
 		--name fyrix-hoarder-cache-bridge \
-		-t hoarder-apt-cache-source-startup launcher.sh
+		-t base-apt-cache
+
+launcher:
+	echo "#! /bin/bash" | tee /bin/launcher.sh
+	echo "apt-cacher-ng -c /etc/apt-cacher-ng/" | tee -a /bin/launcher.sh
+	echo "while true; do" | tee -a /bin/launcher.sh
+	echo "    sleep 12000" | tee -a /bin/launcher.sh
+	echo "done" | tee -a /bin/launcher.sh
+	chmod a+x /bin/launcher.sh
