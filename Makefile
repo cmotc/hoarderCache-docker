@@ -12,14 +12,11 @@ update:
 
 update-build:
 	make update
-	make build
+	make all
 
 update-all:
 	git pull
 	make all
-
-build:
-	docker build -t hoarder-cache .
 
 all:
 	make stage-zero-build
@@ -31,7 +28,8 @@ enter:
 	docker run -i -t base-apt-cache bash
 
 run:
-	docker run -h aptcacher \
+	docker run -d --rm \
+		-h aptcacher \
 		-p 3142:3142 \
 		--volume cache:/var/cache/apt-cacher-ng \
 		--volume /sys/fs/cgroup:/sys/fs/cgroup:ro \
@@ -39,12 +37,13 @@ run:
 		-t base-apt-cache
 
 run-daemon:
-	docker run -d --rm \
+	docker run -d \
 		-h aptcacher \
 		-p 3142:3142 \
+		--restart=always \
 		--volume cache:/var/cache/apt-cacher-ng \
 		--volume /sys/fs/cgroup:/sys/fs/cgroup:ro \
-		--name fyrix-hoarder-cache-daemon \
+		--name fyrix-hoarder-cache \
 		-t base-apt-cache
 
 run-bridge:
@@ -59,8 +58,13 @@ run-bridge:
 
 launcher:
 	echo "#! /bin/bash" | tee /bin/launcher.sh
-	echo "apt-cacher-ng -c /etc/apt-cacher-ng/" | tee -a /bin/launcher.sh
-	echo "while true; do" | tee -a /bin/launcher.sh
-	echo "    sleep 12000" | tee -a /bin/launcher.sh
-	echo "done" | tee -a /bin/launcher.sh
+	echo "chmod 777 /var/cache/apt-cacher-ng" | tee -a /bin/launcher.sh
+	echo "/etc/init.d/apt-cacher-ng start" | tee -a /bin/launcher.sh
+	echo "tail -f /var/log/apt-cacher-ng/*" | tee -a /bin/launcher.sh
 	chmod a+x /bin/launcher.sh
+
+clobber:
+	docker system prune -f; \
+	docker rm -f base-apt-cache; \
+	docker rmi -f fyrix-hoarder-cache; \
+	true
