@@ -45,6 +45,7 @@ WORKDIR /home/packagecacher
 RUN sed -i 's|# PassThroughPattern: .* # this would allow CONNECT to everything|PassThroughPattern: .* # this would allow CONNECT to everything|' /etc/apt-cacher-ng/acng.conf
 
 RUN echo "Acquire::http { Proxy \"http://127.0.0.1:3142\"; };" | tee /etc/apt/apt.conf.d/02proxy
+RUN echo "apthoarder" > /etc/hostname
 EXPOSE 3142/tcp
 ADD . /home/packagecacher/
 RUN make launcher

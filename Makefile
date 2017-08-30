@@ -25,11 +25,11 @@ stage-zero-build:
 	docker build --force-rm -t base-apt-cache .
 
 enter:
-	docker run -i -t base-apt-cache bash
+	docker exec -i -t fyrix-hoarder-cache bash
 
 run:
 	docker run -d --rm \
-		-h aptcacher \
+		-h apthoarder \
 		-p 3142:3142 \
 		--volume cache:/var/cache/apt-cacher-ng \
 		--volume /sys/fs/cgroup:/sys/fs/cgroup:ro \
@@ -38,7 +38,7 @@ run:
 
 run-daemon:
 	docker run -d \
-		-h aptcacher \
+		-h apthoarder \
 		-p 3142:3142 \
 		--restart=always \
 		--volume cache:/var/cache/apt-cacher-ng \
@@ -48,7 +48,7 @@ run-daemon:
 
 run-bridge:
 	docker run -d \
-		-h aptcacher \
+		-h apthoarder \
 		-p 3142:3142 \
 		--restart=always \
 		--volume cache:/var/cache/apt-cacher-ng \
@@ -57,10 +57,10 @@ run-bridge:
 		-t base-apt-cache
 
 launcher:
-	echo "#! /bin/bash" | tee /bin/launcher.sh
-	echo "chmod 777 /var/cache/apt-cacher-ng" | tee -a /bin/launcher.sh
-	echo "/etc/init.d/apt-cacher-ng start" | tee -a /bin/launcher.sh
-	echo "tail -f /var/log/apt-cacher-ng/*" | tee -a /bin/launcher.sh
+	@echo "#! /bin/bash" | tee /bin/launcher.sh
+	@echo "chmod 777 /var/cache/apt-cacher-ng" | tee -a /bin/launcher.sh
+	@echo "/etc/init.d/apt-cacher-ng start" | tee -a /bin/launcher.sh
+	@echo "tail -f /var/log/apt-cacher-ng/*" | tee -a /bin/launcher.sh
 	chmod a+x /bin/launcher.sh
 
 clobber:
