@@ -5,8 +5,8 @@ RUN apt-get update
 RUN apt-get install -yq apt-utils
 RUN apt-get install -y apt-transport-https gpgv-static gnupg2 bash make curl apt-cacher-ng debian-keyring debian-archive-keyring ubuntu-archive-keyring
 
-RUN echo "http://packages.devuan.org/merged" | tee -a /etc/apt-cacher-ng/backends_devuan
-RUN echo "Remap-debrep: file:devuan_mirror /merged ; file:backends_devuan # Debian Archives" | tee -a /etc/apt-cacher-ng/acng.conf
+RUN echo "http://us.mirror.devuan.org/merged" | tee -a /etc/apt-cacher-ng/backends_devuan
+RUN echo "Remap-devrep: file:devuan_mirror /merged ; file:backends_devuan # Debian Archives" | tee -a /etc/apt-cacher-ng/acng.conf
 
 RUN echo "https://repo.lngserv.ru/debian" | tee /etc/apt-cacher-ng/backends_i2pd
 RUN gpg --keyserver keys.gnupg.net --recv-keys 98EBCFE2; \
@@ -42,7 +42,7 @@ RUN adduser --home /home/packagecacher --shell /bin/bash packagecacher
 RUN chown -R packagecacher:packagecacher /home/packagecacher/
 WORKDIR /home/packagecacher
 
-RUN sed -i 's|# PassThroughPattern: .* # this would allow CONNECT to everything|PassThroughPattern: .* # this would allow CONNECT to everything|' /etc/apt-cacher-ng/acng.conf
+#RUN sed -i 's|# PassThroughPattern: .* # this would allow CONNECT to everything|PassThroughPattern: .* # this would allow CONNECT to everything|' /etc/apt-cacher-ng/acng.conf
 
 RUN echo "Acquire::http { Proxy \"http://127.0.0.1:3142\"; };" | tee /etc/apt/apt.conf.d/02proxy
 RUN echo "apthoarder" > /etc/hostname
