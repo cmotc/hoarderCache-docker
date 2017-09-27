@@ -1,13 +1,14 @@
 FROM debian:sid
-ARG acng_username="acng"
-ARG acng_password="mooma"
+ARG acng_password
 VOLUME ["/var/cache/apt-cacher-ng"]
 RUN chown -R _apt:root /var/lib/apt/lists/
 RUN apt-get update
 RUN apt-get install -yq apt-utils
 RUN apt-get install -y apt-transport-https apg gpgv-static gnupg2 bash make curl apt-cacher-ng debian-keyring debian-archive-keyring ubuntu-archive-keyring
 
-RUN echo AdminAuth: $acng_username:$acng_password | tee /etc/apt-cacher-ng/security.conf
+RUN echo AdminAuth: acng:$acng_password | tee /etc/apt-cacher-ng/security.conf
+
+RUN false
 
 RUN echo "http://us.mirror.devuan.org/merged" | tee -a /etc/apt-cacher-ng/backends_devuan
 RUN echo "Remap-devrep: file:devuan_mirror /merged ; file:backends_devuan # Debian Archives" | tee -a /etc/apt-cacher-ng/acng.conf

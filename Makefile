@@ -21,10 +21,10 @@ update-all:
 	make all
 
 all:
-	make stage-zero-build
+	docker build --force-rm --build-arg "acng_password=$(password)" -t base-apt-cache .
 
 stage-zero-build:
-	docker build --force-rm --build-arg "acng_username=$(username) acng_password=$(password) password=$(password)" -t base-apt-cache .
+	docker build --build-arg "acng_password=$(password)" -t base-apt-cache .
 
 enter:
 	docker exec -i -t fyrix-hoarder-cache bash
