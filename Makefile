@@ -24,7 +24,7 @@ all:
 	make stage-zero-build
 
 stage-zero-build:
-	docker build --force-rm --build-args "username=$(username) password=$(password)" -t base-apt-cache .
+	docker build --force-rm --build-arg "acng_username=$(username) acng_password=$(password)" -t base-apt-cache .
 
 enter:
 	docker exec -i -t fyrix-hoarder-cache bash
@@ -61,6 +61,12 @@ run-bridge:
 		--volume /sys/fs/cgroup:/sys/fs/cgroup:ro \
 		--name fyrix-hoarder-cache-bridge \
 		-t base-apt-cache
+
+testpw:
+	@echo $(password)
+
+get-pw:
+	docker exec -t fyrix-hoarder-cache cat /etc/apt-cacher-ng/security.conf
 
 launcher:
 	@echo "#! /bin/bash" | tee /bin/launcher.sh
