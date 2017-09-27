@@ -14,7 +14,7 @@ RUN echo "#PrecacheFor: devrep/dists/*/*/binary-amd64/Packages*" | tee -a /etc/a
 
 
 RUN echo "https://repo.lngserv.ru/debian" | tee /etc/apt-cacher-ng/backends_i2pd
-RUN gpg --keyserver keys.gnupg.net --recv-keys 98EBCFE2; \
+RUN gpg --keyserver hkp://pool.sks-keyservers.net:80 --recv-keys 66F6C87B98EBCFE2; \
 	gpg -a --export 98EBCFE2 | apt-key add -
 RUN echo "Remap-i2pd: http://i2p.repo ; file:backends_i2pd" | tee -a /etc/apt-cacher-ng/acng.conf
 RUN echo "PrecacheFor: i2pd/*/*/*/*/Packages*" | tee -a /etc/apt-cacher-ng/acng.conf
@@ -35,7 +35,7 @@ RUN echo "Remap-emby: http://emby.repo ; file:backends_emby" | tee -a /etc/apt-c
 RUN echo "PrecacheFor: emby/*/*/*/*/Packages*" | tee -a /etc/apt-cacher-ng/acng.conf
 
 RUN echo "https://deb.torproject.org/torproject.org" | tee /etc/apt-cacher-ng/backends_tor
-RUN gpg --keyserver keys.gnupg.net --recv-keys A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89; \
+RUN gpg --keyserver hkp://pool.sks-keyservers.net:80 --recv-keys A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89; \
 	gpg -a --export A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89 | apt-key add -
 RUN echo "Remap-tor: http://tor.repo ; file:backends_tor" | tee -a /etc/apt-cacher-ng/acng.conf
 RUN echo "PrecacheFor: tor/*/*/*/*/Packages*" | tee -a /etc/apt-cacher-ng/acng.conf
