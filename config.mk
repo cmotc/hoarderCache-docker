@@ -1,3 +1,3 @@
 
-export username ?= acng
-export password ?= $(shell apg -n 1)
+export username ?= "acng"
+export password ?= "$(shell apg -n 1)"
