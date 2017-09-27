@@ -1,5 +1,7 @@
 dummy:
 
+include config.mk
+
 push:
 	gpg --batch --yes --clear-sign -u "$(SIGNING_KEY)" \
 		README.md
@@ -22,7 +24,7 @@ all:
 	make stage-zero-build
 
 stage-zero-build:
-	docker build --force-rm -t base-apt-cache .
+	docker build --force-rm --build-args "username=$(username) password=$(password)" -t base-apt-cache .
 
 enter:
 	docker exec -i -t fyrix-hoarder-cache bash
