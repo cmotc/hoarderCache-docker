@@ -5,6 +5,8 @@ RUN apt-get update
 RUN apt-get install -yq apt-utils
 RUN apt-get install -y apt-transport-https gpgv-static gnupg2 bash make curl apt-cacher-ng debian-keyring debian-archive-keyring ubuntu-archive-keyring
 
+RUN echo "AdminAuth: mooma:moopa" | tee -a /etc/apt-cacher-ng/security.conf
+
 RUN echo "http://us.mirror.devuan.org/merged" | tee -a /etc/apt-cacher-ng/backends_devuan
 RUN echo "Remap-devrep: file:devuan_mirror /merged ; file:backends_devuan # Debian Archives" | tee -a /etc/apt-cacher-ng/acng.conf
 RUN echo "#PrecacheFor: devrep/dists/*/*/binary-amd64/Packages*" | tee -a /etc/apt-cacher-ng/acng.conf
