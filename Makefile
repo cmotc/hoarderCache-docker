@@ -36,6 +36,10 @@ run:
 		--name fyrix-hoarder-cache \
 		-t base-apt-cache
 
+restart:
+	docker rm -f fyrix-hoarder-cache; \
+	make run-daemon
+
 run-daemon:
 	docker run -d \
 		-h apthoarder \
