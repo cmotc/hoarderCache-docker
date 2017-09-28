@@ -9,8 +9,9 @@ RUN apt-get install -y apt-transport-https apg gpgv-static gnupg2 bash make curl
 RUN echo AdminAuth: acng:$acng_password | tee /etc/apt-cacher-ng/security.conf
 
 RUN echo "http://us.mirror.devuan.org/merged" | tee -a /etc/apt-cacher-ng/backends_devuan
+RUN echo "http://us.mirror.devuan.org/devuan" | tee -a /etc/apt-cacher-ng/backends_devuan
 RUN echo "Remap-devrep: file:devuan_mirror /merged ; file:backends_devuan # Debian Archives" | tee -a /etc/apt-cacher-ng/acng.conf
-RUN echo "#PrecacheFor: devrep/dists/*/*/binary-amd64/Packages*" | tee -a /etc/apt-cacher-ng/acng.conf
+RUN echo "PrecacheFor: devrep/dists/*/*/binary-amd64/Packages*" | tee -a /etc/apt-cacher-ng/acng.conf
 
 
 RUN echo "https://repo.lngserv.ru/debian" | tee /etc/apt-cacher-ng/backends_i2pd
