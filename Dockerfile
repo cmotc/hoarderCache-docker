@@ -11,7 +11,7 @@ RUN echo AdminAuth: acng:$acng_password | tee /etc/apt-cacher-ng/security.conf
 RUN echo "http://us.mirror.devuan.org/merged" | tee -a /etc/apt-cacher-ng/backends_devuan
 RUN echo "http://us.mirror.devuan.org/devuan" | tee -a /etc/apt-cacher-ng/backends_devuan
 RUN echo "Remap-devrep: file:devuan_mirror /merged ; file:backends_devuan # Debian Archives" | tee -a /etc/apt-cacher-ng/acng.conf
-RUN echo "PrecacheFor: devrep/dists/*/*/binary-amd64/Packages*" | tee -a /etc/apt-cacher-ng/acng.conf
+RUN echo "PrecacheFor: devrep/dists/*/*/*/Packages*" | tee -a /etc/apt-cacher-ng/acng.conf
 
 
 RUN echo "https://repo.lngserv.ru/debian" | tee /etc/apt-cacher-ng/backends_i2pd
@@ -56,6 +56,8 @@ RUN chown -R packagecacher:packagecacher /home/packagecacher/
 WORKDIR /home/packagecacher
 
 RUN sed -i 's|# PassThroughPattern: .* # this would allow CONNECT to everything|PassThroughPattern: .* # this would allow CONNECT to everything|' /etc/apt-cacher-ng/acng.conf
+
+RUN echo "offlinemode:1" | tee -a /etc/apt-cacher-ng/acng.conf
 
 RUN echo "Acquire::http { Proxy \"http://127.0.0.1:3142\"; };" | tee /etc/apt/apt.conf.d/02proxy
 RUN echo "apthoarder" > /etc/hostname
