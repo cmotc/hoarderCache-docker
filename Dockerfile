@@ -16,7 +16,7 @@ RUN echo "PrecacheFor: devrep/dists/*/*/*/Packages*" | tee -a /etc/apt-cacher-ng
 
 RUN echo "https://repo.lngserv.ru/debian" | tee /etc/apt-cacher-ng/backends_i2pd
 RUN gpg --keyserver hkp://pool.sks-keyservers.net:80 --recv-keys 66F6C87B98EBCFE2; \
-	gpg -a --export 98EBCFE2 | apt-key add -
+	gpg -a --export 66F6C87B98EBCFE2 | apt-key add -
 RUN echo "Remap-i2pd: http://i2p.repo ; file:backends_i2pd" | tee -a /etc/apt-cacher-ng/acng.conf
 RUN echo "PrecacheFor: i2pd/*/*/*/*/Packages*" | tee -a /etc/apt-cacher-ng/acng.conf
 
