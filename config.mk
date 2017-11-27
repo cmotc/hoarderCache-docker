@@ -16,9 +16,6 @@ export proxy_addr = http://$(proxy_host):$(proxy_port)
 	@echo "include hoardercache-syncthing/include.mk" >> config.mk
 	touch .get-addons
 
-
-include hoardercache-syncthing/include.mk
-
 addon-build: addon-syncthing-build
 
 addon-restart: addon-syncthing-restart
