@@ -39,7 +39,7 @@ restart:
 	make run-daemon
 
 run-daemon:
-	docker run -d --rm \
+	docker run -d \
 		-h apthoarder \
 		-p 3142:3142 \
 		--restart=always \

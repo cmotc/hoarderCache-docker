@@ -13,3 +13,6 @@ export cache_directory ?= "$(working_directory)/cache"
 	touch .get-addons
 
 
+include hoardercache-syncthing/include.mk
+
+addon-build: addon-syncthing-build
