@@ -27,10 +27,10 @@ update-all:
 	make addon-update
 
 all:
-	docker build --force-rm --build-arg "acng_password=$(password)" -t base-apt-cache .
-
-stage-zero-build:
-	docker build --build-arg "acng_password=$(password)" -t base-apt-cache .
+	docker build --build-arg "acng_password=$(password)" \
+		--build-arg "CACHING_PROXY=$(proxy_addr)" \
+		-t base-apt-cache .
+	docker system prune -f
 
 enter:
 	docker exec -i -t hoardercache bash
@@ -64,3 +64,5 @@ clobber:
 	docker rm -f base-apt-cache; \
 	docker rmi -f hoardercache; \
 	true
+
+clobber-all: clobber addon-clobber
