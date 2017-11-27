@@ -18,3 +18,5 @@ include hoardercache-syncthing/include.mk
 addon-build: addon-syncthing-build
 
 addon-restart: addon-syncthing-restart
+
+addon-update: addon-syncthing-update

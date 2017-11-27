@@ -24,8 +24,7 @@ update-all:
 	make update
 	make all
 	make restart
-	make addon-build
-	make addon-restart
+	make addon-update
 
 all:
 	docker build --force-rm --build-arg "acng_password=$(password)" -t base-apt-cache .

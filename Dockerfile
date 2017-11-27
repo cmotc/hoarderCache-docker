@@ -4,7 +4,7 @@ VOLUME ["/var/cache/apt-cacher-ng"]
 RUN chown -R _apt:root /var/lib/apt/lists/
 RUN apt-get update
 RUN apt-get install -yq apt-utils
-RUN apt-get install -y apt-transport-https apg gpgv-static gnupg2 bash make curl apt-cacher-ng debian-keyring debian-archive-keyring ubuntu-archive-keyring
+RUN apt-get install -y apt-transport-https apg gpgv-static gnupg2 bash make curl apt-cacher-ng debian-keyring debian-archive-keyring ubuntu-archive-keyring netcat-openbsd
 
 RUN echo AdminAuth: acng:$acng_password | tee /etc/apt-cacher-ng/security.conf
 
@@ -36,8 +36,8 @@ RUN echo "Remap-emby: http://emby.repo ; file:backends_emby" | tee -a /etc/apt-c
 RUN echo "PrecacheFor: emby/*/*/*/*/Packages*" | tee -a /etc/apt-cacher-ng/acng.conf
 
 RUN echo "https://deb.torproject.org/torproject.org" | tee /etc/apt-cacher-ng/backends_tor
-RUN gpg --keyserver hkp://pool.sks-keyservers.net:80 --recv-keys A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89; \
-	gpg -a --export A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89 | apt-key add -
+RUN gpg --keyserver hkp://pool.sks-keyservers.net:80 --recv-keys EE8CBC9E886DDD89; \
+	gpg -a --export EE8CBC9E886DDD89 | apt-key add -
 RUN echo "Remap-tor: http://tor.repo ; file:backends_tor" | tee -a /etc/apt-cacher-ng/acng.conf
 RUN echo "PrecacheFor: tor/*/*/*/*/Packages*" | tee -a /etc/apt-cacher-ng/acng.conf
 
@@ -61,7 +61,9 @@ RUN sed -i 's|# SocketPath:/var/run/apt-cacher-ng/socket|SocketPath:/var/run/apt
 
 RUN echo "offlinemode:1" | tee -a /etc/apt-cacher-ng/acng.conf
 
+
 RUN mkdir /var/cache/apt-cacher-ng/_import
+RUN echo "_import" /home/st/cache/.stignore
 
 RUN echo "Acquire::http { Proxy \"http://127.0.0.1:3142\"; };" | tee /etc/apt/apt.conf.d/02proxy
 RUN echo "apthoarder" > /etc/hostname
