@@ -11,7 +11,7 @@ export proxy_port = 3142/
 export proxy_addr = http://$(proxy_host):$(proxy_port)
 
 .get-addons:
-	git clone git@github.com:eyedeekay/hoardercache-syncthing.git 2>/dev/null; true
+	git clone https://github.com/eyedeekay/hoardercache-syncthing.git 2>/dev/null; true
 	@echo "" >> include.mk
 	@echo "include hoardercache-syncthing/include.mk" >> include.mk
 	touch .get-addons
