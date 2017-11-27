@@ -42,7 +42,7 @@ restart:
 run-daemon:
 	docker run -d \
 		-h apthoarder \
-		-p 3142:3142 \
+		-p 0.0.0.0:3142:3142 \
 		--restart=always \
 		--volume "$(cache_directory)":/var/cache/apt-cacher-ng \
 		--volume "$(import_directory)":/var/cache/apt-cacher-ng/_import \
