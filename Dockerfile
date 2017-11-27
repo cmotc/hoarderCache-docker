@@ -66,9 +66,9 @@ RUN sed -i 's|# SocketPath:/var/run/apt-cacher-ng/socket|SocketPath:/var/run/apt
 
 RUN echo "offlinemode:1" | tee -a /etc/apt-cacher-ng/acng.conf
 
+RUN mkdir -p /var/cache/apt-cacher-ng/_import/
 
-RUN mkdir -p /var/cache/apt-cacher-ng/_import/.stfolder
-RUN echo "_import" /home/st/cache/.stignore
+RUN echo "_import" /var/cache/apt-cacher-ng/.stignore
 
 RUN echo "Acquire::http { Proxy \"http://127.0.0.1:3142\"; };" | tee /etc/apt/apt.conf.d/02proxy
 RUN echo "apthoarder" > /etc/hostname

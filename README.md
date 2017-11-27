@@ -1,5 +1,6 @@
 hoarderCache-docker
 ===================
 
-apt-cacher-ng running in a docker container, pre-configured to work with my
-preferred third-party repositories. Don't use without reading.
+This is my pre-configured docker container for running apt-cacher-ng. It's not
+much, but it comes with a few things that may be of interest. In particular, it
+pre-configures some repositories, some pre-caching, and
