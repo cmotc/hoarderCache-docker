@@ -16,3 +16,5 @@ export cache_directory ?= "$(working_directory)/cache"
 include hoardercache-syncthing/include.mk
 
 addon-build: addon-syncthing-build
+
+addon-restart: addon-syncthing-restart
