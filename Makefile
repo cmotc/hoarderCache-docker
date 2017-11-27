@@ -45,6 +45,7 @@ run-daemon:
 		-p 3142:3142 \
 		--restart=always \
 		--volume "$(cache_directory)":/var/cache/apt-cacher-ng \
+		--volume "$(import_directory)":/var/cache/apt-cacher-ng/_import \
 		--volume /sys/fs/cgroup:/sys/fs/cgroup:ro \
 		--name hoardercache \
 		-t base-apt-cache
