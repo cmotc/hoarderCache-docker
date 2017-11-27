@@ -2,3 +2,4 @@
 cache
 import
 hoardercache-syncthing
+include.mk
