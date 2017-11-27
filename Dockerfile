@@ -6,7 +6,9 @@ ARG CACHING_PROXY=""
 ENV DEBIAN_FRONTEND="noninteractive" LANG="C.UTF-8" LC_ALL="C.UTF-8" CACHING_PROXY=""
 ARG acng_password
 VOLUME ["/var/cache/apt-cacher-ng"]
+VOLUME ["/var/cache/apt-cacher-ng/_import"]
 RUN chown -R _apt:root /var/lib/apt/lists/
+RUN echo "Acquire::HTTP::Proxy \"$CACHING_PROXY\";" | tee -a /etc/apt/apt.conf.d/01proxy
 RUN apt-get update
 RUN apt-get install -yq apt-utils
 RUN apt-get install -y apt-transport-https apg gpgv-static gnupg2 bash make curl apt-cacher-ng debian-keyring debian-archive-keyring ubuntu-archive-keyring netcat-openbsd
@@ -66,10 +68,11 @@ RUN sed -i 's|# SocketPath:/var/run/apt-cacher-ng/socket|SocketPath:/var/run/apt
 
 RUN echo "offlinemode:1" | tee -a /etc/apt-cacher-ng/acng.conf
 
-RUN mkdir -p /var/cache/apt-cacher-ng/_import/ && chown -R apt-cacher-ng:apt-cacher-ng /var/cache/apt-cacher-ng/_import
+RUN mkdir -p /var/cache/apt-cacher-ng/_import/
 
 RUN echo "_import" | tee /var/cache/apt-cacher-ng/.stignore
 
+RUN chown -R apt-cacher-ng:apt-cacher-ng /var/cache/apt-cacher-ng/
 RUN echo "Acquire::http { Proxy \"http://127.0.0.1:3142\"; };" | tee /etc/apt/apt.conf.d/02proxy
 RUN echo "apthoarder" > /etc/hostname
 EXPOSE 3142/tcp

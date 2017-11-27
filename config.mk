@@ -1,11 +1,11 @@
 
 export username ?= "acng"
-export password ?= "$(shell apg -n 1)"
+export password ?= "$(shell apg -n 1 -E '($)' )"
 
 export working_directory ?= $(shell pwd)
 export cache_directory ?= $(working_directory)/cache
 
-export proxy_host ?= 172.17.0.2
+export proxy_host ?= 192.168.1.98
 export proxy_port = 3142/
 
 export proxy_addr = http://$(proxy_host):$(proxy_port)
