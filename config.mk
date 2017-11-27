@@ -12,8 +12,8 @@ export proxy_addr = http://$(proxy_host):$(proxy_port)
 
 .get-addons:
 	git clone git@github.com:eyedeekay/hoardercache-syncthing.git 2>/dev/null; true
-	@echo "" >> config.mk
-	@echo "include hoardercache-syncthing/include.mk" >> config.mk
+	@echo "" >> include.mk
+	@echo "include hoardercache-syncthing/include.mk" >> include.mk
 	touch .get-addons
 
 addon-build: addon-syncthing-build
@@ -23,3 +23,5 @@ addon-restart: addon-syncthing-restart
 addon-update: addon-syncthing-update
 
 addon-clobber: addon-syncthing-clobber
+
+include include.mk
