@@ -1,4 +1,8 @@
-dummy:
+dummy: .get-addons
+	@echo "$(username)"
+	@echo "$(password)"
+	@echo "$(working_directory)"
+	@echo "$(cache_directory)"
 
 include config.mk
 
@@ -17,8 +21,9 @@ update-build:
 	make all
 
 update-all:
-	git pull
+	make update
 	make all
+	make restart
 
 all:
 	docker build --force-rm --build-arg "acng_password=$(password)" -t base-apt-cache .
@@ -27,46 +32,24 @@ stage-zero-build:
 	docker build --build-arg "acng_password=$(password)" -t base-apt-cache .
 
 enter:
-	docker exec -i -t fyrix-hoarder-cache bash
-
-run:
-	docker run -d --rm \
-		-h apthoarder \
-		-p 3142:3142 \
-		--volume cache:/var/cache/apt-cacher-ng \
-		--volume /sys/fs/cgroup:/sys/fs/cgroup:ro \
-		--name fyrix-hoarder-cache \
-		-t base-apt-cache
+	docker exec -i -t hoardercache bash
 
 restart:
-	docker rm -f fyrix-hoarder-cache; \
+	docker rm -f hoardercache; \
 	make run-daemon
 
 run-daemon:
-	docker run -d \
+	docker run -d --rm \
 		-h apthoarder \
 		-p 3142:3142 \
 		--restart=always \
-		--volume cache:/var/cache/apt-cacher-ng \
+		--volume "$(cache_directory)":/var/cache/apt-cacher-ng \
 		--volume /sys/fs/cgroup:/sys/fs/cgroup:ro \
-		--name fyrix-hoarder-cache \
+		--name hoardercache \
 		-t base-apt-cache
-
-run-bridge:
-	docker run -d \
-		-h apthoarder \
-		-p 3142:3142 \
-		--restart=always \
-		--volume cache:/var/cache/apt-cacher-ng \
-		--volume /sys/fs/cgroup:/sys/fs/cgroup:ro \
-		--name fyrix-hoarder-cache-bridge \
-		-t base-apt-cache
-
-testpw:
-	@echo $(password)
 
 get-pw:
-	docker exec -t fyrix-hoarder-cache cat /etc/apt-cacher-ng/security.conf
+	docker exec -t hoardercache cat /etc/apt-cacher-ng/security.conf
 
 launcher:
 	@echo "#! /bin/bash" | tee /bin/launcher.sh
@@ -78,5 +61,5 @@ launcher:
 clobber:
 	docker system prune -f; \
 	docker rm -f base-apt-cache; \
-	docker rmi -f fyrix-hoarder-cache; \
+	docker rmi -f hoardercache; \
 	true

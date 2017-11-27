@@ -57,7 +57,11 @@ WORKDIR /home/packagecacher
 
 RUN sed -i 's|# PassThroughPattern: .* # this would allow CONNECT to everything|PassThroughPattern: .* # this would allow CONNECT to everything|' /etc/apt-cacher-ng/acng.conf
 
+RUN sed -i 's|# SocketPath:/var/run/apt-cacher-ng/socket|SocketPath:/var/run/apt-cacher-ng/socket|' /etc/apt-cacher-ng/acng.conf
+
 RUN echo "offlinemode:1" | tee -a /etc/apt-cacher-ng/acng.conf
+
+RUN mkdir /var/cache/apt-cacher-ng/_import
 
 RUN echo "Acquire::http { Proxy \"http://127.0.0.1:3142\"; };" | tee /etc/apt/apt.conf.d/02proxy
 RUN echo "apthoarder" > /etc/hostname
