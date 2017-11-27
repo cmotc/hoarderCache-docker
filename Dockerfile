@@ -66,7 +66,7 @@ RUN sed -i 's|# SocketPath:/var/run/apt-cacher-ng/socket|SocketPath:/var/run/apt
 
 RUN echo "offlinemode:1" | tee -a /etc/apt-cacher-ng/acng.conf
 
-RUN mkdir -p /var/cache/apt-cacher-ng/_import/ && chown apt-cacher-ng:apt-cacher-ng /var/cache/apt-cacher-ng/_import/
+RUN mkdir -p /var/cache/apt-cacher-ng/_import/ && chown -R apt-cacher-ng:apt-cacher-ng /var/cache/apt-cacher-ng/_import
 
 RUN echo "_import" | tee /var/cache/apt-cacher-ng/.stignore
 
