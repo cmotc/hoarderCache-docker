@@ -1,6 +1,6 @@
 
 export username ?= "acng"
-export password ?= "$(shell apg -n 1 -E '($)' )"
+export password ?= "$(shell apg -n 1 -E '($)\' )"
 
 export working_directory ?= $(shell pwd)
 export cache_directory ?= $(working_directory)/cache
