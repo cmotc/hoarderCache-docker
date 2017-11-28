@@ -3,6 +3,10 @@ dummy: .get-addons
 	@echo "$(password)"
 	@echo "$(working_directory)"
 	@echo "$(cache_directory)"
+	mkdir -p "$(cache_directory)"
+	mkdir -p "$(import_directory)"
+	chmod a+w "$(cache_directory)"
+	chmod a+w "$(import_directory)"
 
 include config.mk
 
