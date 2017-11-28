@@ -66,7 +66,7 @@ RUN sed -i 's|# PassThroughPattern: .* # this would allow CONNECT to everything|
 
 RUN sed -i 's|# SocketPath:/var/run/apt-cacher-ng/socket|SocketPath:/var/run/apt-cacher-ng/socket|' /etc/apt-cacher-ng/acng.conf
 
-RUN echo "offlinemode:1" | tee -a /etc/apt-cacher-ng/acng.conf
+RUN echo "offlinemode:0" | tee -a /etc/apt-cacher-ng/acng.conf
 
 RUN mkdir -p /var/cache/apt-cacher-ng/_import/
 
