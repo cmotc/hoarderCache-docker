@@ -60,6 +60,14 @@ launcher:
 	@echo "tail -f /var/log/apt-cacher-ng/*" | tee -a /bin/launcher.sh
 	chmod a+x /bin/launcher.sh
 
+online:
+	docker exec hoardercache sed -i 's|offlinemode:1|offlinemode:0|g'
+	docker exec hoardercache /etc/init.d/apt-cacher-ng restart
+
+online:
+	docker exec hoardercache sed -i 's|offlinemode:0|offlinemode:1|g'
+	docker exec hoardercache /etc/init.d/apt-cacher-ng restart
+
 clobber:
 	docker system prune -f; \
 	docker rm -f base-apt-cache; \
