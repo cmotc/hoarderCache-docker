@@ -3,10 +3,6 @@ dummy: .get-addons
 	@echo "$(password)"
 	@echo "$(working_directory)"
 	@echo "$(cache_directory)"
-	mkdir -p "$(cache_directory)"
-	mkdir -p "$(import_directory)"
-	chmod a+w "$(cache_directory)"
-	chmod a+w "$(import_directory)"
 
 include config.mk
 
@@ -31,6 +27,10 @@ update-all:
 	make addon-update
 
 all:
+	mkdir -p "$(cache_directory)"
+	mkdir -p "$(import_directory)"
+	chmod a+w "$(cache_directory)"
+	chmod a+w "$(import_directory)"
 	docker build --build-arg "acng_password=$(password)" \
 		--build-arg "CACHING_PROXY=$(proxy_addr)" \
 		-t base-apt-cache .
