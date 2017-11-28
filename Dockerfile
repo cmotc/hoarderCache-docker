@@ -73,6 +73,7 @@ RUN mkdir -p /var/cache/apt-cacher-ng/_import/
 RUN echo "_import" | tee /var/cache/apt-cacher-ng/.stignore
 
 RUN chown -R apt-cacher-ng:apt-cacher-ng /var/cache/apt-cacher-ng/
+RUN chmod -R o+w /var/cache/apt-cacher-ng/
 RUN echo "Acquire::http { Proxy \"http://127.0.0.1:3142\"; };" | tee /etc/apt/apt.conf.d/02proxy
 RUN echo "apthoarder" > /etc/hostname
 EXPOSE 3142/tcp
