@@ -64,7 +64,7 @@ online:
 	docker exec hoardercache sed -i 's|offlinemode:1|offlinemode:0|g'
 	docker exec hoardercache /etc/init.d/apt-cacher-ng restart
 
-online:
+offline:
 	docker exec hoardercache sed -i 's|offlinemode:0|offlinemode:1|g'
 	docker exec hoardercache /etc/init.d/apt-cacher-ng restart
 
