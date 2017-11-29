@@ -81,12 +81,12 @@ clobber:
 clobber-all: clobber addon-clobber
 
 curljob:
-	curl -d "abortOnErrors=aOe&doImport=Start+Import&calcSize=cs&asNeeded=an" -p "$(shell docker exec -t hoardercache cat /etc/apt-cacher-ng/security.conf | sed 's|AdminAuth: ||')" 'http://127.0.0.1:3142/acng-report.html'
+	curl -d "abortOnErrors=aOe&doImport=Start+Import&calcSize=cs&asNeeded=an" -u "$(shell docker exec -t hoardercache cat /etc/apt-cacher-ng/security.conf | sed 's|AdminAuth: ||')" 'http://127.0.0.1:3142/acng-report.html'
 
 install-curljob:
 	@echo "#! /usr/bin/env sh"
 	@echo ""
-	@echo "curl -d 'abortOnErrors=aOe&doImport=Start+Import&calcSize=cs&asNeeded=an' -p \$$(docker exec -t hoardercache cat /etc/apt-cacher-ng/security.conf | sed 's|AdminAuth: ||') 'http://127.0.0.1:3142/acng-report.html'"
+	@echo "curl -d 'abortOnErrors=aOe&doImport=Start+Import&calcSize=cs&asNeeded=an' -u \$$(docker exec -t hoardercache cat /etc/apt-cacher-ng/security.conf | sed 's|AdminAuth: ||') 'http://127.0.0.1:3142/acng-report.html'"
 	@echo ""
 
 
