@@ -85,10 +85,12 @@ curljob:
 	  'http://192.168.1.98:3142/acng-report.html?abortOnErrors=aOe&doImport=Start+Import&calcSize=cs&asNeeded=an'
 
 install-curljob:
-	@echo "#! /usr/bin/env sh"
-	@echo "curl \\"
-	@echo "  -u acng:\"\$$(docker exec -t hoardercache cat /etc/apt-cacher-ng/security.conf | sed 's|AdminAuth: acng:||')\" \\"
-	@echo "  'http://192.168.1.98:3142/acng-report.html?abortOnErrors=aOe&doImport=Start+Import&calcSize=cs&asNeeded=an'"
-	@echo ""
+	@echo "#! /usr/bin/env sh" | tee /usr/local/bin/scheduled-cacher-import
+	@echo "curl \\" | tee -a /usr/local/bin/scheduled-cacher-import
+	@echo "  -u acng:\"\$$(docker exec -t hoardercache cat /etc/apt-cacher-ng/security.conf | sed 's|AdminAuth: acng:||')\" \\" | tee -a /usr/local/bin/scheduled-cacher-import
+	@echo "  'http://192.168.1.98:3142/acng-report.html?abortOnErrors=aOe&doImport=Start+Import&calcSize=cs&asNeeded=an'" | tee -a /usr/local/bin/scheduled-cacher-import
+	@echo "" | tee -a /usr/local/bin/scheduled-cacher-import
+	chmod +x /usr/local/bin/scheduled-cacher-import
+	crontab -l | { cat; echo "15 0 0 0 0 /usr/local/bin/scheduled-cacher-import"; } | crontab -
 
 
