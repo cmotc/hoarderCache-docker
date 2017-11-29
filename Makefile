@@ -82,7 +82,7 @@ clobber-all: clobber addon-clobber
 
 curljob:
 	curl -d "abortOnErrors=aOe" \
-		-d "doImport=Start+Import"
+		-d "doImport=Start+Import" \
 		-d "calcSize=cs" \
 		-d "asNeeded=an" \
 		-u $(shell docker exec -t hoardercache cat /etc/apt-cacher-ng/security.conf | sed 's|AdminAuth: ||') \
