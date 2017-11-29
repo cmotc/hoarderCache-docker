@@ -86,8 +86,9 @@ curljob:
 
 install-curljob:
 	echo "#! /usr/bin/env sh" | sudo tee /usr/local/bin/scheduled-cacher-import
+	echo "pw=\$$(docker exec -t hoardercache cat /etc/apt-cacher-ng/security.conf | sed 's|AdminAuth: acng:||')"
 	echo "curl \\" | sudo tee -a /usr/local/bin/scheduled-cacher-import
-	echo "  -u acng:\"\$$(docker exec -t hoardercache cat /etc/apt-cacher-ng/security.conf | sed 's|AdminAuth: acng:||')\" \\" | sudo tee -a /usr/local/bin/scheduled-cacher-import
+	echo "  -u acng:\"$pw\" \\" | sudo tee -a /usr/local/bin/scheduled-cacher-import
 	echo "  'http://192.168.1.98:3142/acng-report.html?abortOnErrors=aOe&doImport=Start+Import&calcSize=cs&asNeeded=an'" | sudo tee -a /usr/local/bin/scheduled-cacher-import
 	echo "" | sudo tee -a /usr/local/bin/scheduled-cacher-import
 	sudo chmod +x /usr/local/bin/scheduled-cacher-import
