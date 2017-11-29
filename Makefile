@@ -91,6 +91,6 @@ install-curljob:
 	echo "  'http://192.168.1.98:3142/acng-report.html?abortOnErrors=aOe&doImport=Start+Import&calcSize=cs&asNeeded=an'" | sudo tee -a /usr/local/bin/scheduled-cacher-import
 	echo "" | sudo tee -a /usr/local/bin/scheduled-cacher-import
 	sudo chmod +x /usr/local/bin/scheduled-cacher-import
-	crontab -l | { cat; echo "15 0 0 0 0 /usr/local/bin/scheduled-cacher-import"; } | crontab -
+	crontab -l | { cat; echo "15 * * * * scheduled-cacher-import"; } | crontab -
 
 
