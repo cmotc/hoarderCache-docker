@@ -55,7 +55,7 @@ run-daemon:
 		-t base-apt-cache
 
 get-pw:
-	docker exec -t hoardercache cat /etc/apt-cacher-ng/security.conf | sed 's|AdminAuth: ||'
+	docker exec -t hoardercache cat /etc/apt-cacher-ng/security.conf | sed 's|AdminAuth: acng:||'
 
 launcher:
 	@echo "#! /bin/bash" | tee /bin/launcher.sh
@@ -82,17 +82,16 @@ clobber-all: clobber addon-clobber
 
 curljob:
 	curl -d "doImport=Start+Import" \
-		-u \'$(shell docker exec -t hoardercache cat /etc/apt-cacher-ng/security.conf | sed 's|AdminAuth: ||')\' \
+		-u acng:$(shell docker exec -t hoardercache cat /etc/apt-cacher-ng/security.conf | sed 's|AdminAuth: acng:||') \
 		'http://127.0.0.1:3142/acng-report.html'
 
 install-curljob:
 	@echo "#! /usr/bin/env sh"
-	@echo ""
-	@echo "curl -d 'abortOnErrors=aOe' \ "
-	@echo "  -d 'doImport=Start+Import' \ "
-	@echo "  -d 'calcSize=cs' \ "
-	@echo "  -d 'asNeeded=an' \ "
-	@echo "  -u \$$(docker exec -t hoardercache cat /etc/apt-cacher-ng/security.conf | sed 's|AdminAuth: ||') \ "
+	@echo "curl -d 'abortOnErrors=aOe' \\"
+	@echo "  -d 'doImport=Start+Import' \\"
+	@echo "  -d 'calcSize=cs' \\"
+	@echo "  -d 'asNeeded=an' \\"
+	@echo "  -u acng:\"\$$(docker exec -t hoardercache cat /etc/apt-cacher-ng/security.conf | sed 's|AdminAuth: acng:||')\" \\"
 	@echo "  'http://127.0.0.1:3142/acng-report.html'"
 	@echo ""
 
