@@ -86,7 +86,7 @@ curljob:
 install-curljob:
 	@echo "#! /usr/bin/env sh"
 	@echo ""
-	@echo "curl -p \$$(docker exec -t hoardercache cat /etc/apt-cacher-ng/security.conf | sed 's|AdminAuth: ||') http://127.0.0.1:3142/acng-report.html?abortOnErrors=aOe&doImport=Start+Import&calcSize=cs&asNeeded=an"
+	@echo "curl -p \$$(docker exec -t hoardercache cat /etc/apt-cacher-ng/security.conf | sed 's|AdminAuth: ||') 'http://127.0.0.1:3142/acng-report.html?abortOnErrors=aOe&doImport=Start+Import&calcSize=cs&asNeeded=an'"
 	@echo ""
 
 
