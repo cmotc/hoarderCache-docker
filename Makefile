@@ -81,7 +81,7 @@ clobber:
 clobber-all: clobber addon-clobber
 
 curljob:
-	curl -d 'abortOnErrors=aOe' \
+	\curl -d 'abortOnErrors=aOe' \
 	  -d 'doImport=Start+Import' \
 	  -d 'calcSize=cs' \
 	  -d 'asNeeded=an' \
