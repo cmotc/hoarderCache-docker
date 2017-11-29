@@ -85,7 +85,7 @@ curljob:
 	  -d 'doImport=Start+Import' \
 	  -d 'calcSize=cs' \
 	  -d 'asNeeded=an' \
-	  -u acng:$(shell docker exec -t hoardercache cat /etc/apt-cacher-ng/security.conf | sed 's|AdminAuth: acng:||') \
+	  -u acng:"$(shell docker exec -t hoardercache cat /etc/apt-cacher-ng/security.conf | sed 's|AdminAuth: acng:||')" \
 	  'http://127.0.0.1:3142/acng-report.html'
 
 install-curljob:
