@@ -82,7 +82,7 @@ clobber-all: clobber addon-clobber
 
 curljob:
 	curl -d "doImport=Start+Import" \
-		-u $(shell docker exec -t hoardercache cat /etc/apt-cacher-ng/security.conf | sed 's|AdminAuth: ||') \
+		-u \'$(shell docker exec -t hoardercache cat /etc/apt-cacher-ng/security.conf | sed 's|AdminAuth: ||')\' \
 		'http://127.0.0.1:3142/acng-report.html'
 
 install-curljob:
