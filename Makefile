@@ -55,7 +55,7 @@ run-daemon:
 		-t base-apt-cache
 
 get-pw:
-	docker exec -t hoardercache cat /etc/apt-cacher-ng/security.conf
+	docker exec -t hoardercache cat /etc/apt-cacher-ng/security.conf | sed 's|AdminAuth: ||'
 
 launcher:
 	@echo "#! /bin/bash" | tee /bin/launcher.sh
