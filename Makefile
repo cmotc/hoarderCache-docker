@@ -3,6 +3,7 @@ dummy: .get-addons
 	@echo "$(password)"
 	@echo "$(working_directory)"
 	@echo "$(cache_directory)"
+	@echo "$(import_directory)"
 
 include config.mk
 

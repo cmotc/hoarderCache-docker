@@ -58,6 +58,11 @@ RUN curl -s https://eyedeekay.github.io/apt-now/eyedeekay.github.io.gpg.key | ap
 RUN echo "Remap-eyedeekay: http://eyedeekay.repo ; file:backends_eyedeekay" | tee -a /etc/apt-cacher-ng/acng.conf
 RUN echo "PrecacheFor: eyedeekay/*/*/*/*/Packages*" | tee -a /etc/apt-cacher-ng/acng.conf
 
+RUN echo "https://eyedeekay.github.io/postinstall/deb-pkg" | tee /etc/apt-cacher-ng/backends_postinstall
+RUN curl -s https://eyedeekay.github.io/postinstall/eyedeekay.github.io.postinstall.gpg.key | apt-key add -
+RUN echo "Remap-eyedeekay: http://postinstall.repo ; file:backends_postinstall" | tee -a /etc/apt-cacher-ng/acng.conf
+RUN echo "PrecacheFor: postinstall/*/*/*/*/Packages*" | tee -a /etc/apt-cacher-ng/acng.conf
+
 RUN adduser --system --disabled-password --home /home/packagecacher --shell /bin/bash --gecos packagecacher --group packagecacher
 RUN chown -R packagecacher:packagecacher /home/packagecacher/
 WORKDIR /home/packagecacher
