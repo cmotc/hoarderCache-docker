@@ -27,8 +27,7 @@ update-all:
 	make addon-update
 
 all:
-	mkdir -p "$(cache_directory)"
-	mkdir -p "$(import_directory)"
+	mkdir -p "$(cache_directory)" "$(import_directory)"
 	chmod a+w "$(cache_directory)"
 	chmod a+w "$(import_directory)"
 	docker build --build-arg "acng_password=$(password)" \
