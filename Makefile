@@ -34,7 +34,14 @@ all:
 	docker build --build-arg "acng_password=$(password)" \
 		--build-arg "CACHING_PROXY=$(proxy_addr)" \
 		-t base-apt-cache .
+	make offline-build
 	docker system prune -f
+
+offline-build:
+	docker build --build-arg "acng_password=$(password)" \
+		--build-arg "CACHING_PROXY=$(proxy_addr)" \
+		-f Dockerfile.offline \
+		-t offline-apt-cache .
 
 enter:
 	docker exec -i -t hoardercache bash
@@ -42,6 +49,8 @@ enter:
 restart:
 	docker rm -f hoardercache; \
 	make run-daemon
+
+run: run-daemon offline-run-daemon
 
 run-daemon:
 	docker run -d \
@@ -53,6 +62,17 @@ run-daemon:
 		--volume /sys/fs/cgroup:/sys/fs/cgroup:ro \
 		--name hoardercache \
 		-t base-apt-cache
+
+offline-run-daemon:
+	docker run -d \
+		-h apthoarder-offline \
+		-p 0.0.0.0:3143:3143 \
+		--restart=always \
+		--volume "$(cache_directory)":/var/cache/apt-cacher-ng \
+		--volume "$(import_directory)":/var/cache/apt-cacher-ng/_import \
+		--volume /sys/fs/cgroup:/sys/fs/cgroup:ro \
+		--name hoardercache-offline \
+		-t offline-apt-cache
 
 get-pw:
 	docker exec -t hoardercache cat /etc/apt-cacher-ng/security.conf | sed 's|AdminAuth: acng:||'

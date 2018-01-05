@@ -17,7 +17,9 @@ RUN echo AdminAuth: acng:$acng_password | tee /etc/apt-cacher-ng/security.conf
 
 RUN echo "http://us.mirror.devuan.org/merged" | tee -a /etc/apt-cacher-ng/backends_devuan
 RUN echo "http://us.mirror.devuan.org/devuan" | tee -a /etc/apt-cacher-ng/backends_devuan
-RUN echo "Remap-devrep: file:devuan_mirror /merged ; file:backends_devuan # Debian Archives" | tee -a /etc/apt-cacher-ng/acng.conf
+RUN echo "http://packages.devuan.org/merged" | tee -a /etc/apt-cacher-ng/backends_devuan
+RUN echo "http://packages.devuan.org/devuan" | tee -a /etc/apt-cacher-ng/backends_devuan
+RUN echo "Remap-devrep: file:devuan_mirror /merged ; file:backends_devuan # Devuan Archives" | tee -a /etc/apt-cacher-ng/acng.conf
 #RUN echo "PrecacheFor: devrep/dists/*/*/*/Packages*" | tee -a /etc/apt-cacher-ng/acng.conf
 
 

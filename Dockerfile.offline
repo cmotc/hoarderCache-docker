@@ -1,0 +1,18 @@
+FROM base-apt-cache
+
+RUN sed -i 's|offlinemode:0|offlinemode:1|g' /etc/apt-cacher-ng/acng.conf
+RUN sed -i 's|#Port:|Port:|g' /etc/apt-cacher-ng/acng.conf
+RUN sed -i 's|3142|3143|g' /etc/apt-cacher-ng/acng.conf
+
+RUN mkdir -p /var/cache/apt-cacher-ng/_import/
+
+RUN echo "_import" | tee /var/cache/apt-cacher-ng/.stignore
+
+RUN chown -R apt-cacher-ng:apt-cacher-ng /var/cache/apt-cacher-ng/
+RUN chmod -R o+w /var/cache/apt-cacher-ng/
+RUN echo "Acquire::http { Proxy \"http://127.0.0.1:3142\"; };" | tee /etc/apt/apt.conf.d/02proxy
+RUN echo "apthoarder-offline" > /etc/hostname
+EXPOSE 3143/tcp
+ADD . /home/packagecacher/
+RUN make launcher
+CMD [ "launcher.sh" ]

@@ -11,18 +11,91 @@ I am way too tired to write this right now.
 preconfigured repos
 -------------------
 
+### Devuan
+
+        http://us.mirror.devuan.org/merged
+        http://us.mirror.devuan.org/devuan
+        http://packages.devuan.org/merged
+        http://packages.devuan.org/devuan
+            /etc/apt-cacher-ng/backends_devuan
+        Remap-devrep: file:devuan_mirror /merged ; file:backends_devuan # Devuan Archives
+            /etc/apt-cacher-ng/acng.conf
+
 ### Tor Project
+
+        https://deb.torproject.org/torproject.org
+            /etc/apt-cacher-ng/backends_tor
+        Remap-tor: http://tor.repo ; file:backends_tor
+        PrecacheFor: tor/*/*/*/*/Packages*"
+            /etc/apt-cacher-ng/acng.conf
 
 ### Tox Project
 
+        https://pkg.tox.chat/debian"
+            /etc/apt-cacher-ng/backends_tox
+        Remap-tox: http://tox.repo ; file:backends_tox"
+        PrecacheFor: tox/*/*/*/*/Packages*"
+            /etc/apt-cacher-ng/acng.conf
+
 ### Syncthing
+
+        https://apt.syncthing.net/
+            /etc/apt-cacher-ng/backends_syncthing
+        Remap-syncthing: http://syncthing.repo ; file:backends_syncthing
+        PrecacheFor: syncthing/*/*/*/*/Packages*
+            /etc/apt-cacher-ng/acng.conf
 
 ### i2pd
 
+        https://repo.lngserv.ru/debian"
+            /etc/apt-cacher-ng/backends_i2pd
+        Remap-i2pd: http://i2p.repo ; file:backends_i2pd
+        PrecacheFor: i2pd/*/*/*/*/Packages*
+            /etc/apt-cacher-ng/acng.conf
+
 ### emby
+
+        https://download.opensuse.org/repositories/home:/emby/Debian_Next/"
+            /etc/apt-cacher-ng/backends_emby
+        Remap-emby: http://emby.repo ; file:backends_emby"
+        PrecacheFor: emby/*/*/*/*/Packages*"
+            /etc/apt-cacher-ng/acng.conf
 
 ### PaleMoon Browser
 
+        https://download.opensuse.org/repositories/home:/stevenpusser/Debian_9.0/
+            /etc/apt-cacher-ng/backends_palemoon
+        Remap-palemoon: http://palemoon.repo ; file:backends_palemoon"
+        PrecacheFor: palemoon/*/*/*/*/Packages*"
+            /etc/apt-cacher-ng/acng.conf
 
+online/offline proxies
+----------------------
+
+Instead of switching between offline and online apt proxy modes manually, this
+setup uses two containers that work from the same data. They simply have
+slightly different configuration files, in this setup, the online proxy contains
+the settings:
+
+        offlinemode:0
+        Port:3142
+
+and the offline proxy contains the settings:
+
+        offlinemode:1
+        Port:3143
+
+Otherwise, the two are exactly identical.
+
+hoardercache-auto-detect
+------------------------
+
+This is a script for Auto-Apt-Proxy which prioritizes the online apt-cacher-ng
+instance, but falls back to an offline apt-cacher-ng instance.
+
+[Figuring this out still. Doing it from this mostly.](https://askubuntu.com/questions/53443/how-do-i-ignore-a-proxy-if-not-available)
 
 pre-caching
+-----------
+
+
