@@ -100,7 +100,7 @@ proxycheck:
 	@echo "include hoardercache-overlaynets/include.mk" >> include.mk
 	touch .get-addons
 
-addon-build: addon-syncthing-build
+addon-build: addon-syncthing-build addon-overlaynets-build
 
 addon-restart: addon-syncthing-restart
 
