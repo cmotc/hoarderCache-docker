@@ -11,7 +11,8 @@ RUN chown -R _apt:root /var/lib/apt/lists/
 RUN echo "Acquire::HTTP::Proxy \"$CACHING_PROXY\";" | tee -a /etc/apt/apt.conf.d/01proxy
 RUN apt-get update
 RUN apt-get install -yq apt-utils
-RUN apt-get install -y apt-transport-https apg gpgv-static gnupg2 bash make curl apt-cacher-ng debian-keyring debian-archive-keyring ubuntu-archive-keyring netcat-traditional
+RUN apt-get install -y apt-transport-https apg gpgv-static gnupg2 bash make curl apt-cacher-ng debian-keyring debian-archive-keyring ubuntu-archive-keyring netcat-openbsd
+RUN which nc | false
 
 RUN echo AdminAuth: acng:$acng_password | tee /etc/apt-cacher-ng/security.conf
 

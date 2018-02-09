@@ -19,13 +19,13 @@ show_proxy_messages=0
 # delay and therefore its recommended to put the proxy which is most likely to
 # be available on the top. If no proxy is available, a direct connection will
 # be used
-try_proxies=(
+try_proxies='
 172.16.48.1:3142/
 127.0.0.1:3142/
 packages.devuan.org:80/
 172.16.48.1:3143/
 127.0.01:3143/
-)
+192.168.1.98:3143/'
 
 print_msg() {
     # \x0d clears the line so [Working] is hidden
