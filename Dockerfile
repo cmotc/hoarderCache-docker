@@ -29,10 +29,10 @@ RUN gpg --keyserver hkp://pool.sks-keyservers.net:80 --recv-keys 66F6C87B98EBCFE
 RUN echo "Remap-i2pd: http://i2p.repo ; file:backends_i2pd" | tee -a /etc/apt-cacher-ng/acng.conf
 RUN echo "PrecacheFor: i2pd/*/*/*/*/Packages*" | tee -a /etc/apt-cacher-ng/acng.conf
 
-RUN echo "https://pkg.tox.chat/debian" | tee /etc/apt-cacher-ng/backends_tox
-RUN curl -s https://pkg.tox.chat/debian/pkg.gpg.key | apt-key add -
-RUN echo "Remap-tox: http://tox.repo ; file:backends_tox" | tee -a /etc/apt-cacher-ng/acng.conf
-RUN echo "PrecacheFor: tox/*/*/*/*/Packages*" | tee -a /etc/apt-cacher-ng/acng.conf
+#RUN echo "https://pkg.tox.chat/debian" | tee /etc/apt-cacher-ng/backends_tox
+#RUN curl -s https://pkg.tox.chat/debian/pkg.gpg.key | apt-key add -
+#RUN echo "Remap-tox: http://tox.repo ; file:backends_tox" | tee -a /etc/apt-cacher-ng/acng.conf
+#RUN echo "PrecacheFor: tox/*/*/*/*/Packages*" | tee -a /etc/apt-cacher-ng/acng.conf
 
 RUN echo "https://apt.syncthing.net/" | tee /etc/apt-cacher-ng/backends_syncthing
 RUN curl -s https://syncthing.net/release-key.txt | apt-key add -

@@ -1,0 +1,5 @@
+FROM eyedeekay/acng-syncthing
+#RUN echo "https://pkg.tox.chat/debian" | tee /etc/apt-cacher-ng/backends_tox
+#RUN curl -s https://pkg.tox.chat/debian/pkg.gpg.key | apt-key add -
+#RUN echo "Remap-tox: http://tox.repo ; file:backends_tox" | tee -a /etc/apt-cacher-ng/acng.conf
+#RUN echo "PrecacheFor: tox/*/*/*/*/Packages*" | tee -a /etc/apt-cacher-ng/acng.conf

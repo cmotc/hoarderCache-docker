@@ -82,7 +82,7 @@ export cache_directory ?= $(working_directory)/cache
 
 export proxy_host = $(shell ./hoardercache-detect-proxy | sed 's|:3142/||g' | sed 's|:3143/||g' | sed 's|http://||g')
 export proxy_host ?= 192.168.1.98
-export proxy_port = 3142/
+export proxy_port = 3142
 
 export proxy_addr = http://$(proxy_host):$(proxy_port)
 
@@ -102,10 +102,10 @@ proxycheck:
 
 addon-build: addon-syncthing-build addon-overlaynets-build
 
-addon-restart: addon-syncthing-restart
+addon-restart: addon-syncthing-restart addon-overlaynets-restart
 
-addon-update: addon-syncthing-update
+addon-update: addon-syncthing-update addon-overlaynets-update
 
-addon-clobber: addon-syncthing-clobber
+addon-clobber: addon-syncthing-clobber addon-overlaynets-clobber
 
 include include.mk

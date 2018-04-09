@@ -1,0 +1,23 @@
+FROM eyedeekay/acng-eyedeekay
+RUN adduser --system --disabled-password --home /home/packagecacher --shell /bin/bash --gecos packagecacher --group packagecacher
+RUN chown -R packagecacher:packagecacher /home/packagecacher/
+WORKDIR /home/packagecacher
+
+RUN sed -i 's|# PassThroughPattern: .* # this would allow CONNECT to everything|PassThroughPattern: .* # this would allow CONNECT to everything|' /etc/apt-cacher-ng/acng.conf
+
+RUN sed -i 's|# SocketPath:/var/run/apt-cacher-ng/socket|SocketPath:/var/run/apt-cacher-ng/socket|' /etc/apt-cacher-ng/acng.conf
+
+RUN echo "offlinemode:0" | tee -a /etc/apt-cacher-ng/acng.conf
+
+RUN mkdir -p /var/cache/apt-cacher-ng/_import/
+
+RUN echo "_import" | tee /var/cache/apt-cacher-ng/.stignore
+
+RUN chown -R apt-cacher-ng:apt-cacher-ng /var/cache/apt-cacher-ng/
+RUN chmod -R o+w /var/cache/apt-cacher-ng/
+RUN echo "Acquire::http { Proxy \"http://127.0.0.1:3142\"; };" | tee /etc/apt/apt.conf.d/02proxy
+RUN echo "apthoarder" > /etc/hostname
+EXPOSE 3142/tcp
+ADD . /home/packagecacher/
+RUN make launcher
+CMD [ "launcher.sh" ]

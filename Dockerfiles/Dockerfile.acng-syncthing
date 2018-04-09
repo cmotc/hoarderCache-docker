@@ -1,0 +1,5 @@
+FROM eyedeekay/acng-tor
+RUN echo "https://apt.syncthing.net/" | tee /etc/apt-cacher-ng/backends_syncthing
+RUN curl -s https://syncthing.net/release-key.txt | apt-key add -
+RUN echo "Remap-syncthing: http://syncthing.repo ; file:backends_syncthing" | tee -a /etc/apt-cacher-ng/acng.conf
+RUN echo "PrecacheFor: syncthing/*/*/*/*/Packages*" | tee -a /etc/apt-cacher-ng/acng.conf

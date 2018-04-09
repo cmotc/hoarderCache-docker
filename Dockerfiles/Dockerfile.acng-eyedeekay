@@ -1,0 +1,10 @@
+FROM eyedeekay/acng-tox
+RUN echo "https://eyedeekay.github.io/apt-now/deb-pkg" | tee /etc/apt-cacher-ng/backends_eyedeekay
+RUN curl -s https://eyedeekay.github.io/apt-now/eyedeekay.github.io.gpg.key | apt-key add -
+RUN echo "Remap-eyedeekay: http://eyedeekay.repo ; file:backends_eyedeekay" | tee -a /etc/apt-cacher-ng/acng.conf
+RUN echo "PrecacheFor: eyedeekay/*/*/*/*/Packages*" | tee -a /etc/apt-cacher-ng/acng.conf
+
+RUN echo "https://eyedeekay.github.io/postinstall/deb-pkg" | tee /etc/apt-cacher-ng/backends_postinstall
+RUN curl -s https://eyedeekay.github.io/postinstall/eyedeekay.github.io.postinstall.gpg.key | apt-key add -
+RUN echo "Remap-eyedeekay: http://postinstall.repo ; file:backends_postinstall" | tee -a /etc/apt-cacher-ng/acng.conf
+RUN echo "PrecacheFor: postinstall/*/*/*/*/Packages*" | tee -a /etc/apt-cacher-ng/acng.conf

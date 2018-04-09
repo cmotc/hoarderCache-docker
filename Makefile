@@ -31,11 +31,35 @@ all:
 	mkdir -p "$(cache_directory)" "$(import_directory)"
 	chmod a+w "$(cache_directory)"
 	chmod a+w "$(import_directory)"
-	docker build --build-arg "acng_password=$(password)" \
-		--build-arg "CACHING_PROXY=$(proxy_addr)" \
-		-t base-apt-cache .
+	make build
 	make offline-build
 	docker system prune -f
+
+build:
+	docker build -f Dockerfiles/Dockerfile.acng-base \
+		 --build-arg "acng_password=$(password)" \
+		--build-arg "CACHING_PROXY=$(proxy_addr)" \
+		-t eyedeekay/acng-base .
+	docker build -f Dockerfiles/Dockerfile.acng-devuan \
+		-t eyedeekay/acng-devuan .
+	docker build -f Dockerfiles/Dockerfile.acng-i2p \
+		-t eyedeekay/acng-i2p .
+	docker build -f Dockerfiles/Dockerfile.acng-tor \
+		-t eyedeekay/acng-tor .
+	docker build -f Dockerfiles/Dockerfile.acng-syncthing \
+		-t eyedeekay/acng-syncthing .
+	docker build -f Dockerfiles/Dockerfile.acng-tox \
+		-t eyedeekay/acng-tox .
+	docker build -f Dockerfiles/Dockerfile.acng-eyedeekay \
+		-t eyedeekay/acng-eyedeekay .
+	make online-build
+
+network:
+	docker network create apthoarder; true
+
+online-build:
+	docker build -f Dockerfiles/Dockerfile.acng-online \
+		-t eyedeekay/acng-eyedeekay .
 
 offline-build:
 	docker build --build-arg "acng_password=$(password)" \
@@ -46,15 +70,18 @@ offline-build:
 enter:
 	docker exec -i -t hoardercache bash
 
-restart:
+restart: network
 	docker rm -f hoardercache; \
 	make run-daemon
 
 run: run-daemon offline-run-daemon
 
-run-daemon:
+run-daemon: network
 	docker run -d \
-		-h apthoarder \
+		--network apthoarder \
+		--network-alias apthoarder-site \
+		--hostname apthoarder-site \
+		--link apthoarder-host \
 		-p 0.0.0.0:3142:3142 \
 		--restart=always \
 		--volume "$(cache_directory)":/var/cache/apt-cacher-ng \
@@ -63,9 +90,12 @@ run-daemon:
 		--name hoardercache \
 		-t base-apt-cache
 
-offline-run-daemon:
+offline-run-daemon: network
 	docker run -d \
-		-h apthoarder-offline \
+		--network apthoarder \
+		--network-alias apthoarder-site-offline \
+		--hostname apthoarder-site-offline \
+		--link apthoarder-host \
 		-p 0.0.0.0:3143:3143 \
 		--restart=always \
 		--volume "$(cache_directory)":/var/cache/apt-cacher-ng \
