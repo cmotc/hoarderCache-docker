@@ -74,7 +74,8 @@ restart: network
 	docker rm -f hoardercache; \
 	make run-daemon
 
-run: run-daemon offline-run-daemon
+run: run-daemon
+	#offline-run-daemon
 
 run-daemon: network
 	docker run -d \
@@ -87,7 +88,7 @@ run-daemon: network
 		--volume "$(cache_directory)":/var/cache/apt-cacher-ng \
 		--volume "$(import_directory)":/var/cache/apt-cacher-ng/_import \
 		--volume /sys/fs/cgroup:/sys/fs/cgroup:ro \
-		--name hoardercache \
+		--name apthoarder-site \
 		-t base-apt-cache
 
 offline-run-daemon: network
@@ -101,7 +102,7 @@ offline-run-daemon: network
 		--volume "$(cache_directory)":/var/cache/apt-cacher-ng \
 		--volume "$(import_directory)":/var/cache/apt-cacher-ng/_import \
 		--volume /sys/fs/cgroup:/sys/fs/cgroup:ro \
-		--name hoardercache-offline \
+		--name apthoarder-site-offline \
 		-t offline-apt-cache
 
 get-pw:
