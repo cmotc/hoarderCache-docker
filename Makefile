@@ -60,7 +60,7 @@ online-build:
 offline-build:
 	docker build --build-arg "acng_password=$(password)" \
 		--build-arg "CACHING_PROXY=$(proxy_addr)" \
-		-f Dockerfiles/Dockerfile.offline \
+		-f Dockerfiles/Dockerfile.acng-offline \
 		-t eyedeekay/acng-offline .
 
 enter:
