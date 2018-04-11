@@ -21,11 +21,7 @@ update-build:
 	make update
 	make all
 
-update-all:
-	make update
-	make all
-	make restart
-	make addon-update
+update-all: update all restart addon-update
 
 all:
 	mkdir -p "$(cache_directory)" "$(import_directory)"
@@ -59,13 +55,13 @@ network:
 
 online-build:
 	docker build -f Dockerfiles/Dockerfile.acng-online \
-		-t eyedeekay/acng-eyedeekay .
+		-t eyedeekay/acng .
 
 offline-build:
 	docker build --build-arg "acng_password=$(password)" \
 		--build-arg "CACHING_PROXY=$(proxy_addr)" \
 		-f Dockerfile.offline \
-		-t offline-apt-cache .
+		-t eyedeekay/acng-offline .
 
 enter:
 	docker exec -i -t hoardercache bash
@@ -89,7 +85,7 @@ run-daemon: network
 		--volume "$(import_directory)":/var/cache/apt-cacher-ng/_import \
 		--volume /sys/fs/cgroup:/sys/fs/cgroup:ro \
 		--name apthoarder-site \
-		-t base-apt-cache
+		-t eyedeekay/acng
 
 offline-run-daemon: network
 	docker run -d \
@@ -103,7 +99,7 @@ offline-run-daemon: network
 		--volume "$(import_directory)":/var/cache/apt-cacher-ng/_import \
 		--volume /sys/fs/cgroup:/sys/fs/cgroup:ro \
 		--name apthoarder-site-offline \
-		-t offline-apt-cache
+		-t eyedeekay/acng-offline
 
 get-pw:
 	docker exec -t hoardercache cat /etc/apt-cacher-ng/security.conf | sed 's|AdminAuth: acng:||'
