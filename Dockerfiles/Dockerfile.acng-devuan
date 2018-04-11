@@ -1,6 +1,6 @@
 FROM eyedeekay/acng-base
-RUN echo "http://us.mirror.devuan.org/merged" | tee -a /etc/apt-cacher-ng/backends_devuan
-RUN echo "http://us.mirror.devuan.org/devuan" | tee -a /etc/apt-cacher-ng/backends_devuan
-RUN echo "http://packages.devuan.org/merged" | tee -a /etc/apt-cacher-ng/backends_devuan
-RUN echo "http://packages.devuan.org/devuan" | tee -a /etc/apt-cacher-ng/backends_devuan
+RUN echo "http://us.mirror.devuan.org/merged" | tee -a /etc/apt-cacher-ng/devuan_mirror | tee -a /etc/apt-cacher-ng/backends_devuan
+RUN echo "http://us.mirror.devuan.org/devuan" | tee -a /etc/apt-cacher-ng/devuan_mirror
+RUN echo "http://packages.devuan.org/merged" | tee -a /etc/apt-cacher-ng/devuan_mirror
+RUN echo "http://packages.devuan.org/devuan" | tee -a /etc/apt-cacher-ng/devuan_mirror
 RUN echo "Remap-devrep: file:devuan_mirror /merged ; file:backends_devuan # Devuan Archives" | tee -a /etc/apt-cacher-ng/acng.conf
