@@ -67,7 +67,7 @@ enter:
 	docker exec -i -t hoardercache bash
 
 restart: network
-	docker rm -f hoardercache; \
+	docker rm -f apthoarder-site; \
 	make run-daemon
 
 run: run-daemon
